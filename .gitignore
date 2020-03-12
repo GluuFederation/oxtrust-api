@@ -1,0 +1,18 @@
+.idea/
+.project
+.settings/
+.sass-cache/
+*.classpath
+*.iml
+.classpath
+.pydevproject
+nb-configuration.xml
+*.factorypath
+weld-validation-report.html
+
+# Maven
+target
+test-output
+
+server/.tern-project
+/bin/
