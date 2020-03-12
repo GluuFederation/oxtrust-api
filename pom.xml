@@ -124,7 +124,7 @@
 			<!-- oxTrust API -->
 			<dependency>
 				<groupId>org.gluu</groupId>
-				<artifactId>api-base</artifactId>
+				<artifactId>api-rest</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
