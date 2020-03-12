@@ -12,7 +12,7 @@ import org.gluu.oxtrust.api.server.model.LdapConfigurationDTO;
 import org.gluu.oxtrust.api.server.util.ApiConstants;
 import org.gluu.oxtrust.api.server.util.LdapConfigurationDtoAssembly;
 import org.gluu.oxtrust.api.server.util.LdapConfigurationDuplicatedException;
-import org.gluu.oxtrust.ldap.service.LdapConfigurationService;
+import org.gluu.oxtrust.service.LdapConfigurationService;
 import org.gluu.oxtrust.service.filter.ProtectedApi;
 import org.gluu.oxtrust.util.ConnectionStatus;
 import org.gluu.oxtrust.util.LdapConnectionData;

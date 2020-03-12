@@ -4,7 +4,7 @@
  * Copyright (c) 2014, Gluu
  */
 
-package org.gluu.oxtrust.status.service;
+package org.gluu.oxtrust.service.status;
 
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -17,11 +17,11 @@ import javax.inject.Named;
 
 import org.gluu.config.oxtrust.AppConfiguration;
 import org.gluu.oxtrust.config.ConfigurationFactory;
-import org.gluu.oxtrust.ldap.service.ConfigurationService;
-import org.gluu.oxtrust.ldap.service.IGroupService;
-import org.gluu.oxtrust.ldap.service.IPersonService;
 import org.gluu.oxtrust.model.GluuConfiguration;
 import org.gluu.oxtrust.model.GluuOxTrustStat;
+import org.gluu.oxtrust.service.ConfigurationService;
+import org.gluu.oxtrust.service.IGroupService;
+import org.gluu.oxtrust.service.IPersonService;
 import org.gluu.oxtrust.service.cdi.event.StatusCheckerDailyEvent;
 import org.gluu.persist.exception.BasePersistenceException;
 import org.gluu.service.cdi.async.Asynchronous;

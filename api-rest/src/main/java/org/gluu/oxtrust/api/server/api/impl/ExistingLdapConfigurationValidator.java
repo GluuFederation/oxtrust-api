@@ -5,7 +5,7 @@ import com.google.common.collect.FluentIterable;
 import org.apache.commons.codec.binary.StringUtils;
 import org.gluu.model.ldap.GluuLdapConfiguration;
 import org.gluu.oxtrust.api.server.model.LdapConfigurationDTO;
-import org.gluu.oxtrust.ldap.service.LdapConfigurationService;
+import org.gluu.oxtrust.service.LdapConfigurationService;
 
 import javax.inject.Inject;
 

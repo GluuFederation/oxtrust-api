@@ -13,8 +13,8 @@ import javax.ws.rs.core.Response;
 import org.gluu.oxtrust.api.server.model.AuthenticationMethod;
 import org.gluu.oxtrust.api.server.util.ApiConstants;
 import org.gluu.oxtrust.api.server.util.Constants;
-import org.gluu.oxtrust.ldap.service.ConfigurationService;
 import org.gluu.oxtrust.model.GluuConfiguration;
+import org.gluu.oxtrust.service.ConfigurationService;
 import org.gluu.oxtrust.service.filter.ProtectedApi;
 import org.slf4j.Logger;
 

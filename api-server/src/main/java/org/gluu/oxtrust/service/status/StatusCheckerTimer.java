@@ -4,7 +4,7 @@
  * Copyright (c) 2014, Gluu
  */
 
-package org.gluu.oxtrust.status.service;
+package org.gluu.oxtrust.service.status;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -46,11 +46,11 @@ import org.apache.commons.exec.CommandLine;
 import org.apache.commons.io.IOUtils;
 import org.gluu.config.oxtrust.AppConfiguration;
 import org.gluu.oxtrust.config.ConfigurationFactory;
-import org.gluu.oxtrust.ldap.service.ConfigurationService;
-import org.gluu.oxtrust.ldap.service.IGroupService;
-import org.gluu.oxtrust.ldap.service.IPersonService;
 import org.gluu.oxtrust.model.GluuConfiguration;
 import org.gluu.oxtrust.model.GluuOxTrustStat;
+import org.gluu.oxtrust.service.ConfigurationService;
+import org.gluu.oxtrust.service.IGroupService;
+import org.gluu.oxtrust.service.IPersonService;
 import org.gluu.oxtrust.service.cdi.event.StatusCheckerTimerEvent;
 import org.gluu.oxtrust.status.model.ConfigurationStatus;
 import org.gluu.oxtrust.status.model.OxtrustStat;

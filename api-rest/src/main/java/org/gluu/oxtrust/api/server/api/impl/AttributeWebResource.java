@@ -23,7 +23,7 @@ import org.gluu.model.GluuAttribute;
 import org.gluu.model.GluuStatus;
 import org.gluu.oxtrust.api.server.util.ApiConstants;
 import org.gluu.oxtrust.api.server.util.Constants;
-import org.gluu.oxtrust.ldap.service.AttributeService;
+import org.gluu.oxtrust.service.AttributeService;
 import org.gluu.oxtrust.service.filter.ProtectedApi;
 import org.gluu.util.StringHelper;
 import org.slf4j.Logger;

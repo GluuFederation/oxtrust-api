@@ -10,7 +10,7 @@ import org.gluu.config.oxtrust.AppConfiguration;
 import org.gluu.oxtrust.api.server.model.OxTrustJsonSetting;
 import org.gluu.oxtrust.api.server.util.ApiConstants;
 import org.gluu.oxtrust.api.server.util.Constants;
-import org.gluu.oxtrust.ldap.service.JsonConfigurationService;
+import org.gluu.oxtrust.service.JsonConfigurationService;
 import org.gluu.oxtrust.service.filter.ProtectedApi;
 import org.slf4j.Logger;
 

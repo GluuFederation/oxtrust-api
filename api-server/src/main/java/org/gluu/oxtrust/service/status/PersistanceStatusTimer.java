@@ -4,7 +4,7 @@
  * Copyright (c) 2014, Gluu
  */
 
-package org.gluu.oxtrust.status.service;
+package org.gluu.oxtrust.service.status;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -14,7 +14,7 @@ import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.gluu.oxtrust.ldap.service.ApplicationFactory;
+import org.gluu.oxtrust.service.ApplicationFactory;
 import org.gluu.persist.PersistenceEntryManager;
 import org.gluu.persist.ldap.impl.LdapEntryManager;
 import org.gluu.persist.ldap.operation.impl.LdapConnectionProvider;

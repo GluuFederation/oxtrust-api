@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.gluu.model.custom.script.model.CustomScript;
 import org.gluu.oxtrust.api.server.util.ApiConstants;
-import org.gluu.oxtrust.ldap.service.ConfigurationService;
+import org.gluu.oxtrust.service.ConfigurationService;
 import org.gluu.oxtrust.service.custom.CustomScriptService;
 import org.gluu.oxtrust.service.filter.ProtectedApi;
 import org.gluu.util.StringHelper;

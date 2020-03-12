@@ -9,7 +9,7 @@ import org.gluu.config.oxtrust.LdapOxPassportConfiguration;
 import org.gluu.model.passport.PassportConfiguration;
 import org.gluu.model.passport.Provider;
 import org.gluu.oxtrust.api.server.util.ApiConstants;
-import org.gluu.oxtrust.ldap.service.PassportService;
+import org.gluu.oxtrust.service.PassportService;
 import org.gluu.oxtrust.service.filter.ProtectedApi;
 import org.slf4j.Logger;
 

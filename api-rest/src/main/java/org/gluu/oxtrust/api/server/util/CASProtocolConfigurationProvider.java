@@ -1,6 +1,6 @@
 package org.gluu.oxtrust.api.server.util;
 
-import org.gluu.oxtrust.ldap.service.CASService;
+import org.gluu.oxtrust.service.CASService;
 import org.gluu.oxtrust.util.CASProtocolAvailability;
 import org.gluu.oxtrust.util.CASProtocolConfiguration;
 import org.gluu.config.oxtrust.AppConfiguration;
