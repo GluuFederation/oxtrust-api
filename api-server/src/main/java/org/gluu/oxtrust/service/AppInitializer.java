@@ -8,8 +8,6 @@ package org.gluu.oxtrust.service;
 
 import java.lang.annotation.Annotation;
 import java.net.URISyntaxException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
@@ -25,16 +23,16 @@ import javax.inject.Named;
 import javax.servlet.ServletContext;
 
 import org.gluu.exception.OxIntializationException;
-import org.gluu.model.custom.script.CustomScriptType;
-import org.gluu.oxauth.model.uma.UmaMetadata;
+import org.gluu.oxauth.client.OpenIdConfigurationClient;
+import org.gluu.oxauth.client.OpenIdConfigurationResponse;
+import org.gluu.oxauth.client.OpenIdConnectDiscoveryClient;
+import org.gluu.oxauth.client.OpenIdConnectDiscoveryResponse;
 import org.gluu.oxauth.model.util.SecurityProviderUtility;
 import org.gluu.oxtrust.config.ConfigurationFactory;
 import org.gluu.oxtrust.service.cdi.event.CentralLdap;
 import org.gluu.oxtrust.service.custom.LdapCentralConfigurationReload;
 import org.gluu.oxtrust.service.logger.LoggerService;
 import org.gluu.oxtrust.service.status.PersistanceStatusTimer;
-import org.gluu.oxtrust.service.status.StatusCheckerDaily;
-import org.gluu.oxtrust.service.status.StatusCheckerTimer;
 import org.gluu.oxtrust.util.BuildVersionService;
 import org.gluu.persist.PersistenceEntryManager;
 import org.gluu.persist.ldap.impl.LdapEntryManager;
@@ -42,8 +40,6 @@ import org.gluu.persist.model.PersistenceConfiguration;
 import org.gluu.service.PythonService;
 import org.gluu.service.cdi.event.LdapConfigurationReload;
 import org.gluu.service.cdi.util.CdiUtil;
-import org.gluu.service.custom.lib.CustomLibrariesLoader;
-import org.gluu.service.custom.script.CustomScriptManager;
 import org.gluu.service.metric.inject.ReportMetric;
 import org.gluu.service.timer.QuartzSchedulerManager;
 import org.gluu.util.StringHelper;
@@ -52,12 +48,6 @@ import org.gluu.util.security.StringEncrypter;
 import org.gluu.util.security.StringEncrypter.EncryptionException;
 import org.slf4j.Logger;
 import org.slf4j.bridge.SLF4JBridgeHandler;
-import org.gluu.oxauth.client.OpenIdConfigurationClient;
-import org.gluu.oxauth.client.OpenIdConfigurationResponse;
-import org.gluu.oxauth.client.OpenIdConnectDiscoveryClient;
-import org.gluu.oxauth.client.OpenIdConnectDiscoveryResponse;
-import org.gluu.oxauth.client.uma.UmaClientFactory;
-import org.gluu.oxauth.client.uma.UmaMetadataService;
 
 /**
  * Perform startup time initialization
@@ -98,28 +88,13 @@ public class AppInitializer {
 	private ConfigurationFactory configurationFactory;
 
 	@Inject
-	private StatusCheckerDaily statusCheckerDaily;
-
-	@Inject
-	private StatusCheckerTimer statusCheckerTimer;
-	
-	@Inject
-	private UpdateChecker updateChecker;
-
-	@Inject
 	private PythonService pythonService;
 
 	@Inject
 	private MetricService metricService;
 
 	@Inject
-	private CustomScriptManager customScriptManager;
-
-	@Inject
 	private PersistanceStatusTimer ldapStatusTimer;
-
-	@Inject
-	private CustomLibrariesLoader customLibrariesLoader;
 
 	@Inject
 	private QuartzSchedulerManager quartzSchedulerManager;
@@ -153,39 +128,26 @@ public class AppInitializer {
 	public void applicationInitialized(@Observes @Initialized(ApplicationScoped.class) Object init) {
 		log.debug("Initializing application services");
 		showBuildInfo();
-
 		configurationFactory.create();
-
 		PersistenceEntryManager localLdapEntryManager = persistenceEntryManagerInstance.get();
 		initializeLdifArchiver(localLdapEntryManager);
 
 		// Initialize python interpreter
-		pythonService.initPythonInterpreter(configurationFactory.getBaseConfiguration()
-				.getString("pythonModulesDir", null));
-
-		// Initialize script manager
-		List<CustomScriptType> supportedCustomScriptTypes = Arrays.asList(CustomScriptType.CACHE_REFRESH,
-				CustomScriptType.UPDATE_USER, CustomScriptType.USER_REGISTRATION, CustomScriptType.ID_GENERATOR,
-				CustomScriptType.SCIM);
+		pythonService
+				.initPythonInterpreter(configurationFactory.getBaseConfiguration().getString("pythonModulesDir", null));
 
 		// Start timer
 		initSchedulerService();
-
 		// Schedule timer tasks
 		metricService.initTimer();
 		configurationFactory.initTimer();
 		loggerService.initTimer();
 		ldapStatusTimer.initTimer();
-		customScriptManager.initTimer(supportedCustomScriptTypes);
 		cleanerTimer.initTimer();
-		statusCheckerDaily.initTimer();
-		statusCheckerTimer.initTimer();
-		updateChecker.initTimer();
 	}
 
 	protected void initSchedulerService() {
 		quartzSchedulerManager.start();
-
 		String disableScheduler = System.getProperties().getProperty("gluu.disable.scheduler");
 		if ((disableScheduler != null) && Boolean.valueOf(disableScheduler)) {
 			this.log.warn("Suspending Quartz Scheduler Service...");
@@ -271,13 +233,11 @@ public class AppInitializer {
 	public PersistenceEntryManager createMetricPersistenceEntryManager() {
 		Properties connectionProperties = prepareCustomPersistanceProperties(
 				ApplicationFactory.PERSISTENCE_METRIC_CONFIG_GROUP_NAME);
-
 		PersistenceEntryManager persistenceEntryManager = applicationFactory.getPersistenceEntryManagerFactory()
 				.createEntryManager(connectionProperties);
 		log.info("Created {}: {} with operation service: {}",
 				new Object[] { ApplicationFactory.PERSISTENCE_METRIC_ENTRY_MANAGER_NAME, persistenceEntryManager,
 						persistenceEntryManager.getOperationService() });
-
 		return persistenceEntryManager;
 	}
 
@@ -290,37 +250,29 @@ public class AppInitializer {
 				&& configurationFactory.getAppConfiguration().isUpdateStatus())) {
 			return new LdapEntryManager();
 		}
-
 		FileConfiguration ldapCentralConfig = configurationFactory.getLdapCentralConfiguration();
 		Properties centralConnectionProperties = (Properties) ldapCentralConfig.getProperties();
-
 		EncryptionService securityService = encryptionServiceInstance.get();
 		Properties decryptedCentralConnectionProperties = securityService
 				.decryptProperties(centralConnectionProperties);
-
-		// TODO: Review if it works well with couchbase
 		PersistenceEntryManager centralLdapEntryManager = applicationFactory.getPersistenceEntryManagerFactory()
 				.createEntryManager(decryptedCentralConnectionProperties);
 		log.info("Created {}: {}", new Object[] { ApplicationFactory.PERSISTENCE_CENTRAL_ENTRY_MANAGER_NAME,
 				centralLdapEntryManager.getOperationService() });
-
 		return centralLdapEntryManager;
 	}
 
 	public void recreatePersistanceEntryManager(@Observes @LdapConfigurationReload String event) {
 		recreatePersistanceEntryManagerImpl(persistenceEntryManagerInstance,
 				ApplicationFactory.PERSISTENCE_ENTRY_MANAGER_NAME);
-
 		recreatePersistanceEntryManagerImpl(persistenceEntryManagerInstance,
 				ApplicationFactory.PERSISTENCE_METRIC_ENTRY_MANAGER_NAME, ReportMetric.Literal.INSTANCE);
 	}
 
 	protected void recreatePersistanceEntryManagerImpl(Instance<PersistenceEntryManager> instance,
 			String persistenceEntryManagerName, Annotation... qualifiers) {
-		// Get existing application scoped instance
 		PersistenceEntryManager oldLdapEntryManager = CdiUtil.getContextBean(beanManager, PersistenceEntryManager.class,
 				persistenceEntryManagerName, qualifiers);
-
 		// Close existing connections
 		closePersistenceEntryManager(oldLdapEntryManager, persistenceEntryManagerName);
 
@@ -401,27 +353,20 @@ public class AppInitializer {
 			log.error("Failed to load OpenId configuration!", e);
 			throw new OxIntializationException("Failed to load OpenId configuration!");
 		}
-
 		if (openIdConfiguration.getStatus() != 200) {
 			throw new OxIntializationException("OpenId configuration response is invalid!");
 		}
-
 		return openIdConfiguration;
 	}
 
 	public void destroy(@Observes @BeforeDestroyed(ApplicationScoped.class) ServletContext init) {
 		log.info("Stopping services and closing DB connections at server shutdown...");
-		log.debug("Checking who intiated destory", new Throwable());
-
 		metricService.close();
-
 		PersistenceEntryManager persistanceEntryManager = persistenceEntryManagerInstance.get();
 		closePersistenceEntryManager(persistanceEntryManager, ApplicationFactory.PERSISTENCE_ENTRY_MANAGER_NAME);
-
 		PersistenceEntryManager persistanceMetricEntryManager = persistenceMetricEntryManagerInstance.get();
 		closePersistenceEntryManager(persistanceMetricEntryManager,
 				ApplicationFactory.PERSISTENCE_METRIC_ENTRY_MANAGER_NAME);
-
 		PersistenceEntryManager persistanceCentralEntryManager = persistenceCentralEntryManagerInstance.get();
 		if (persistanceCentralEntryManager != null) {
 			closePersistenceEntryManager(persistanceCentralEntryManager,
