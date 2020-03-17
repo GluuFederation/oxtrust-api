@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
+import org.gluu.oxtrust.api.server.annotations.MaxAge;
 import org.gluu.oxtrust.api.server.util.ApiConstants;
 import org.gluu.oxtrust.model.OxAuthClient;
 import org.gluu.oxtrust.service.ClientService;
@@ -48,6 +50,7 @@ public class ClientWebResource extends BaseWebResource {
 			@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = OxAuthClient[].class)), description = "Success"),
 			@ApiResponse(responseCode = "500", description = "Server error") })
 	@ProtectedApi(scopes = { READ_ACCESS })
+	@MaxAge(value=30)
 	public Response listClients() {
 		log(logger, "Get all clients ");
 		try {
