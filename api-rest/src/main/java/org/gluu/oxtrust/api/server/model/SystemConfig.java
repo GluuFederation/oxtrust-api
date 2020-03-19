@@ -7,7 +7,7 @@ import org.gluu.persist.model.base.GluuBoolean;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class OxtrustSetting implements Serializable {
+public class SystemConfig implements Serializable {
 
 	/**
 	 * 
@@ -17,7 +17,25 @@ public class OxtrustSetting implements Serializable {
 	private String allowPasswordReset = GluuBoolean.DISABLED.getValue();
 	private String enablePassport = GluuBoolean.DISABLED.getValue();
 	private String enableScim = GluuBoolean.DISABLED.getValue();
+	private String enableSaml = GluuBoolean.DISABLED.getValue();
+	private String enableRadius = GluuBoolean.DISABLED.getValue();
 	private String allowProfileManagement = GluuBoolean.DISABLED.getValue();
+
+	public String getEnableSaml() {
+		return enableSaml;
+	}
+
+	public void setEnableSaml(String enableSaml) {
+		this.enableSaml = enableSaml;
+	}
+
+	public String getEnableRadius() {
+		return enableRadius;
+	}
+
+	public void setEnableRadius(String enableRadius) {
+		this.enableRadius = enableRadius;
+	}
 
 	public String getAllowPasswordReset() {
 		return allowPasswordReset;

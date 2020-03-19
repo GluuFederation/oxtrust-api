@@ -1,10 +1,26 @@
 package org.gluu.oxtrust.api.server.api.impl;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 
 import org.gluu.oxtrust.api.server.annotations.MaxAge;
 import org.gluu.oxtrust.api.server.util.ApiConstants;
@@ -13,18 +29,16 @@ import org.gluu.oxtrust.service.ClientService;
 import org.gluu.oxtrust.service.ScopeService;
 import org.gluu.oxtrust.service.filter.ProtectedApi;
 import org.gluu.util.StringHelper;
+import org.jboss.resteasy.links.AddLinks;
+import org.jboss.resteasy.links.LinkResource;
 import org.oxauth.persistence.model.Scope;
 import org.slf4j.Logger;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @Path(ApiConstants.BASE_API_URL + ApiConstants.CLIENTS)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -45,15 +59,17 @@ public class ClientWebResource extends BaseWebResource {
 	}
 
 	@GET
-	@Operation(summary = "Get openid connect clients", description = "Get openid connect clients")
+	@Operation(summary = "Retrieve all openid connect clients", description = "Retrieve all openid connect clients")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = OxAuthClient[].class)), description = "Success"),
 			@ApiResponse(responseCode = "500", description = "Server error") })
 	@ProtectedApi(scopes = { READ_ACCESS })
-	@MaxAge(value=30)
-	public Response listClients() {
-		log(logger, "Get all clients ");
+	@MaxAge(value = 30)
+    @AddLinks
+    @LinkResource(value = OxAuthClient.class)
+	public Response getOpenIdClients(@Context UriInfo uriInfo) {
 		try {
+			log(logger, " Retrieving all openid connect clients");
 			List<OxAuthClient> clientList = clientService.getAllClients();
 			return Response.ok(clientList).build();
 		} catch (Exception e) {
@@ -102,6 +118,8 @@ public class ClientWebResource extends BaseWebResource {
 			@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = OxAuthClient.class)), description = "Success"),
 			@ApiResponse(responseCode = "500", description = "Server error") })
 	@ProtectedApi(scopes = { READ_ACCESS })
+	@AddLinks
+    @LinkResource
 	public Response getClientByInum(@PathParam(ApiConstants.INUM) @NotNull String inum) {
 		log(logger, "Get client " + inum);
 		try {
@@ -143,6 +161,7 @@ public class ClientWebResource extends BaseWebResource {
 			@ApiResponse(responseCode = "201", content = @Content(schema = @Schema(implementation = OxAuthClient.class)), description = "Success"),
 			@ApiResponse(responseCode = "500", description = "Server error") })
 	@ProtectedApi(scopes = { WRITE_ACCESS })
+	@LinkResource
 	public Response createClient(OxAuthClient client) {
 		log(logger, "Add new client ");
 		try {

@@ -15,7 +15,7 @@ import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.util.EntityUtils;
 import org.gluu.oxauth.model.gluu.GluuConfiguration;
-import org.gluu.oxtrust.api.server.model.OxtrustSetting;
+import org.gluu.oxtrust.api.server.model.SystemConfig;
 import org.gluu.oxtrust.api.server.util.ApiConstants;
 import org.gluu.persist.model.base.GluuBoolean;
 import org.junit.Assert;
@@ -26,7 +26,7 @@ public class OxtrustSettingWebResourceTest extends BaseApiTest {
 	@Test
 	public void getOxtrustSettingsTest() {
 		HttpUriRequest request = new HttpGet(
-				BASE_URL + ApiConstants.BASE_API_URL + ApiConstants.CONFIGURATION + ApiConstants.OXTRUST_SETTINGS);
+				BASE_URL + ApiConstants.CONFIGURATION + ApiConstants.OXTRUST_SETTINGS);
 		HttpResponse response = handle(request);
 		Assert.assertEquals(HttpStatus.SC_OK, response.getStatusLine().getStatusCode());
 		HttpEntity entity = response.getEntity();
@@ -42,7 +42,7 @@ public class OxtrustSettingWebResourceTest extends BaseApiTest {
 
 	@Test
 	public void updateOxtrustSettingTest() {
-		OxtrustSetting oxtrustSetting = getOxTrustSetting();
+		SystemConfig oxtrustSetting = getOxTrustSetting();
 		try {
 			HttpPut second = new HttpPut(
 					BASE_URL + ApiConstants.BASE_API_URL + ApiConstants.CONFIGURATION + ApiConstants.OXTRUST_SETTINGS);
@@ -61,8 +61,8 @@ public class OxtrustSettingWebResourceTest extends BaseApiTest {
 		}
 	}
 
-	private OxtrustSetting getOxTrustSetting() {
-		OxtrustSetting oxtrustSetting = new OxtrustSetting();
+	private SystemConfig getOxTrustSetting() {
+		SystemConfig oxtrustSetting = new SystemConfig();
 		oxtrustSetting.setAllowPasswordReset(GluuBoolean.ENABLED.getValue());
 		oxtrustSetting.setAllowProfileManagement(GluuBoolean.ENABLED.getValue());
 		oxtrustSetting.setEnablePassport(GluuBoolean.ENABLED.getValue());

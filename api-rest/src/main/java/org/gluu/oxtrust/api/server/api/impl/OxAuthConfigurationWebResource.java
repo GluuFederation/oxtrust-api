@@ -20,11 +20,11 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path(ApiConstants.BASE_API_URL + ApiConstants.CONFIGURATION + ApiConstants.OXAUTH_JSONSETTINGS)
+@Path(ApiConstants.CONFIGURATION + ApiConstants.OXAUTH)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
-public class OxAuthJsonSettingWebResource extends BaseWebResource {
+public class OxAuthConfigurationWebResource extends BaseWebResource {
 
 	@Inject
 	private Logger logger;
@@ -34,16 +34,13 @@ public class OxAuthJsonSettingWebResource extends BaseWebResource {
 	private String oxAuthDynamicConfigJson;
 
 	@GET
-	@Operation(summary = "Get json oxauth settings", description = "Gets oxAuth configuration in JSON format",
-            responses = {
-                    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = OxAuthJsonConfiguration.class)), description=Constants.RESULT_SUCCESS),
-                    @ApiResponse(responseCode = "500", description = "Server error")
-            }
-    )
+	@Operation(summary = "Retrieve oxauth configuration", description = "Retrieve oxauth configuration", responses = {
+			@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = OxAuthJsonConfiguration.class)), description = Constants.RESULT_SUCCESS),
+			@ApiResponse(responseCode = "500", description = "Server error") })
 	@ProtectedApi(scopes = { READ_ACCESS })
-	public Response getOxAuthJsonSettings() {
+	public Response retrieveOxauthConfiguration() {
 		try {
-			log(logger, "Processing oxauth json settings retrieval request");
+			log(logger, "Retrieving oxauth configuration");
 			this.oxAuthDynamicConfigJson = jsonConfigurationService.getOxAuthDynamicConfigJson();
 			OxAuthJsonConfiguration configuration = new ObjectMapper().readValue(this.oxAuthDynamicConfigJson,
 					OxAuthJsonConfiguration.class);
@@ -55,17 +52,14 @@ public class OxAuthJsonSettingWebResource extends BaseWebResource {
 	}
 
 	@PUT
-	@Operation(summary = "Update json oxauth settings", description="Updates the oxAuth JSON configuration")
+	@Operation(summary = "Update json oxauth settings", description = "Updates the oxAuth JSON configuration")
 	@ApiResponses(value = {
-			@ApiResponse(responseCode = "200", content = @Content(
-                    schema = @Schema(implementation = OxAuthJsonConfiguration.class)
-            ), description = Constants.RESULT_SUCCESS),
-			@ApiResponse(responseCode = "404", description = "Not found"),
-            @ApiResponse(responseCode = "500", description = "Server error") })
+			@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = OxAuthJsonConfiguration.class)), description = Constants.RESULT_SUCCESS),
+			@ApiResponse(responseCode = "500", description = "Server error") })
 	@ProtectedApi(scopes = { WRITE_ACCESS })
-	public Response updateOxauthJsonSetting(OxAuthJsonConfiguration oxAuthJsonSetting) {
+	public Response updateOxauthConfiguration(OxAuthJsonConfiguration oxAuthJsonSetting) {
 		try {
-			log(logger, "Processing oxauth json settings update request");
+			log(logger, "Processing oxauth json configuration");
 			Preconditions.checkNotNull(oxAuthJsonSetting, "Attempt to update null oxauth json settings");
 			String value = new ObjectMapper().writeValueAsString(oxAuthJsonSetting);
 			jsonConfigurationService.saveOxAuthDynamicConfigJson(value);

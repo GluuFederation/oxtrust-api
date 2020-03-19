@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
@@ -45,29 +46,29 @@
 			</testResource>
 		</testResources>
 
-        <plugins>
-            <plugin>
-                <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-maven-plugin</artifactId>
-                <version>2.0.8</version>
-                <configuration>
-                    <outputFileName>openapi</outputFileName>
-                    <outputPath>${project.build.directory}/generated</outputPath>
-                    <!--<outputFormat>JSONANDYAML</outputFormat>-->
-                    <outputFormat>JSONANDYAML</outputFormat>
-                    <resourcePackages>
-                        <package>org.gluu.oxtrust.api.server.api.impl</package>
-                    </resourcePackages>
-                    <prettyPrint>TRUE</prettyPrint>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>resolve</goal>
-                        </goals>
-                    </execution>
-                </executions>
+		<plugins>
+			<plugin>
+				<groupId>io.swagger.core.v3</groupId>
+				<artifactId>swagger-maven-plugin</artifactId>
+				<version>2.0.8</version>
+				<configuration>
+					<outputFileName>openapi</outputFileName>
+					<outputPath>${project.build.directory}/generated</outputPath>
+					<!--<outputFormat>JSONANDYAML</outputFormat> -->
+					<outputFormat>JSONANDYAML</outputFormat>
+					<resourcePackages>
+						<package>org.gluu.oxtrust.api.server.api.impl</package>
+					</resourcePackages>
+					<prettyPrint>TRUE</prettyPrint>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>resolve</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<!-- maven assembly plugin -->
 			<plugin>
@@ -89,7 +90,7 @@
 					</execution>
 				</executions>
 			</plugin>
-        </plugins>
+		</plugins>
 
 		<pluginManagement>
 			<plugins>
@@ -119,17 +120,24 @@
 			<groupId>org.gluu</groupId>
 			<artifactId>oxtrust-service</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-links -->
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-links</artifactId>
+			<version>3.9.3.Final</version>
+		</dependency>
+
 		<!-- Weld -->
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-jaxrs2</artifactId>
-            <version>2.0.8</version>
-        </dependency>
+		<dependency>
+			<groupId>io.swagger.core.v3</groupId>
+			<artifactId>swagger-jaxrs2</artifactId>
+			<version>2.0.8</version>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
