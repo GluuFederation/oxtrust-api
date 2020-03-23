@@ -36,8 +36,6 @@ public class OxTrustConfigurationWebResource extends BaseWebResource {
 	@Inject
 	private JsonConfigurationService jsonConfigurationService;
 
-	private AppConfiguration oxTrustappConfiguration;
-
 	@GET
 	@Operation(summary = "Retrieve oxtrust configuration", description = "Retrieve oxtrust configuration")
 	@ApiResponses(value = {
@@ -47,7 +45,25 @@ public class OxTrustConfigurationWebResource extends BaseWebResource {
 	public Response retrieveOxtrustConfiguration() {
 		try {
 			log(logger, "Retrieving oxtrust configuration");
-			this.oxTrustappConfiguration = jsonConfigurationService.getOxTrustappConfiguration();
+			AppConfiguration oxTrustappConfiguration = jsonConfigurationService.getOxTrustappConfiguration();
+			return Response.ok(oxTrustappConfiguration).build();
+		} catch (Exception e) {
+			log(logger, e);
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	@GET
+	@Operation(summary = "Retrieve oxtrust basic configuration", description = "Retrieve oxtrust basic configuration")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AppConfiguration.class)), description = Constants.RESULT_SUCCESS),
+			@ApiResponse(responseCode = "500", description = "Server error") })
+	@ProtectedApi(scopes = { READ_ACCESS })
+	@Path("/basic")
+	public Response retrieveOxtrustBasicConfiguration() {
+		try {
+			log(logger, "Retrieving oxtrust basic configuration");
+			AppConfiguration oxTrustappConfiguration = jsonConfigurationService.getOxTrustappConfiguration();
 			return Response.ok(oxTrustappConfiguration).build();
 		} catch (Exception e) {
 			log(logger, e);
