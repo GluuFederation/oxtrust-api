@@ -28,6 +28,8 @@ public class ScimConfig implements Serializable {
 	private String scimUmaClientKeyStoreFile;
 	@JsonProperty("scimUmaClientKeyStorePassword")
 	private String scimUmaClientKeyStorePassword;
+	@JsonProperty("scimMaxCount")
+	private Integer scimMaxCount;
 	@JsonProperty("scimTestMode")
 	private Boolean scimTestMode;
 
@@ -99,6 +101,16 @@ public class ScimConfig implements Serializable {
 	@JsonProperty("scimTestMode")
 	public void setScimTestMode(Boolean scimTestMode) {
 		this.scimTestMode = scimTestMode;
+	}
+	
+	@JsonProperty("scimMaxCount")
+	public Integer getScimMaxCount() {
+		return scimMaxCount;
+	}
+
+	@JsonProperty("scimMaxCount")
+	public void setScimMaxCount(int scimMaxCount) {
+		this.scimMaxCount = scimMaxCount;
 	}
 
 }

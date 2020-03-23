@@ -20,6 +20,7 @@ public final class ApiConstants {
 	public static final String USERS = "/users";
 	public static final String ACRS = "/acrs";
 	public static final String PASSPORT = "/passport";
+	public static final String METRIC = "/metric";
 	public static final String CONFIG = "/config";
 	public static final String PROVIDERS = "/providers";
 	public static final String IDP_INITIATED = "/idpinitiaded";
@@ -35,6 +36,7 @@ public final class ApiConstants {
 	public static final String CONFIGURATION = "/configuration";
 	public static final String SYSTEM = "/system";
 	public static final String STATUS = "/status";
+	public static final String SCIM = "/scim";
 	public static final String TEST = "/test";
 	public static final String STRATEGIES = "/strategies";
 	public static final String OXTRUST_JSONSETTINGS = "/oxtrust/settings";
