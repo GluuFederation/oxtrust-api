@@ -20,6 +20,9 @@ public final class ApiConstants {
 	public static final String USERS = "/users";
 	public static final String ACRS = "/acrs";
 	public static final String PASSPORT = "/passport";
+	public static final String RPT = "/rpt";
+	public static final String IDP = "/idp";
+	public static final String API = "/api";
 	public static final String METRIC = "/metric";
 	public static final String CONFIG = "/config";
 	public static final String PROVIDERS = "/providers";

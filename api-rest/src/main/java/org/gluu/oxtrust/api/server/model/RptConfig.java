@@ -22,9 +22,6 @@ public class RptConfig implements Serializable{
 	@JsonProperty("rptConnectionPoolCustomKeepAliveTimeout")
 	private Integer rptConnectionPoolCustomKeepAliveTimeout;
 	
-	
-	
-	
 	@JsonProperty("rptConnectionPoolMaxTotal")
 	public void setRptConnectionPoolMaxTotal(Integer rptConnectionPoolMaxTotal) {
 		this.rptConnectionPoolMaxTotal = rptConnectionPoolMaxTotal;

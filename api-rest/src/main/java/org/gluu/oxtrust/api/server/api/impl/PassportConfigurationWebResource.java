@@ -4,7 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -63,7 +63,7 @@ public class PassportConfigurationWebResource extends BaseWebResource {
 		}
 	}
 
-	@PUT
+	@POST
 	@Operation(summary = "Update passport configuration", description = "Update passport configuration")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = PassportConfig.class)), description = Constants.RESULT_SUCCESS),

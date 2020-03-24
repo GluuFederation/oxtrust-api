@@ -22,7 +22,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path(ApiConstants.BASE_API_URL + ApiConstants.CONFIGURATION + ApiConstants.SMTP)
+@Path(ApiConstants.CONFIGURATION + ApiConstants.SMTP)
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
@@ -40,9 +40,9 @@ public class SmtpConfigurationWebResource extends BaseWebResource {
 	private EncryptionService encryptionService;
 
 	@GET
-	@Operation(summary="Get smtp configuration" ,description = "Get smtp configuration")
+	@Operation(summary = "Retrieve smtp configuration", description = "Retrieve smtp configuration")
 	@ApiResponses(value = {
-            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = SmtpConfiguration.class)), description = Constants.RESULT_SUCCESS),
+			@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = SmtpConfiguration.class)), description = Constants.RESULT_SUCCESS),
 			@ApiResponse(responseCode = "500", description = "Server error") })
 	@ProtectedApi(scopes = { READ_ACCESS })
 	public Response getSmtpServerConfiguration() {
@@ -60,10 +60,11 @@ public class SmtpConfigurationWebResource extends BaseWebResource {
 	}
 
 	@PUT
-	@Operation(summary="Update smtp configuration", description = "Update smtp configuration")
+	@Operation(summary = "Update smtp configuration", description = "Update smtp configuration")
 	@ApiResponses(value = {
-            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = SmtpConfiguration.class)), description = Constants.RESULT_SUCCESS),
-			@ApiResponse(responseCode = "404", description = "Not found"), @ApiResponse(responseCode = "500", description = "Server error") })
+			@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = SmtpConfiguration.class)), description = Constants.RESULT_SUCCESS),
+			@ApiResponse(responseCode = "404", description = "Not found"),
+			@ApiResponse(responseCode = "500", description = "Server error") })
 	@ProtectedApi(scopes = { WRITE_ACCESS })
 	public Response updateSmtpConfiguration(SmtpConfiguration smtpConfiguration) {
 		try {
@@ -81,9 +82,9 @@ public class SmtpConfigurationWebResource extends BaseWebResource {
 
 	@GET
 	@Path(ApiConstants.TEST)
-	@Operation(summary="Test smtp configuration", description = "Test smtp configuration")
+	@Operation(summary = "Test smtp configuration", description = "Test smtp configuration")
 	@ApiResponses(value = {
-            @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = SmtpConfiguration.class)), description = Constants.RESULT_SUCCESS),
+			@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = SmtpConfiguration.class)), description = Constants.RESULT_SUCCESS),
 			@ApiResponse(responseCode = "500", description = "Server error") })
 	@ProtectedApi(scopes = { READ_ACCESS })
 	public Response testSmtpConfiguration() {
