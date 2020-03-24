@@ -1,27 +1,21 @@
 package org.gluu.oxtrust.api.server.model;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OxTrustJsonConfiguration implements Serializable {
+public class OxTrustBasicConfig implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3011359447811602714L;
 	@JsonProperty("baseDN")
-	@JsonIgnore
 	private String baseDN;
 	@JsonProperty("orgSupportEmail")
 	private String orgSupportEmail;
@@ -29,47 +23,14 @@ public class OxTrustJsonConfiguration implements Serializable {
 	private String applicationUrl;
 	@JsonProperty("baseEndpoint")
 	private String baseEndpoint;
-	@JsonProperty("personObjectClassTypes")
-	private List<String> personObjectClassTypes = null;
-	@JsonProperty("personCustomObjectClass")
-	private String personCustomObjectClass;
-	@JsonProperty("personObjectClassDisplayNames")
-	private List<String> personObjectClassDisplayNames = null;
-	@JsonProperty("contactObjectClassTypes")
-	private List<Object> contactObjectClassTypes = null;
-	@JsonProperty("contactObjectClassDisplayNames")
-	private List<Object> contactObjectClassDisplayNames = null;
-	@JsonProperty("photoRepositoryRootDir")
-	private String photoRepositoryRootDir;
-	@JsonProperty("photoRepositoryThumbWidth")
-	private Integer photoRepositoryThumbWidth;
-	@JsonProperty("photoRepositoryThumbHeight")
-	private Integer photoRepositoryThumbHeight;
-	@JsonProperty("photoRepositoryCountLeveles")
-	private Integer photoRepositoryCountLeveles;
-	@JsonProperty("photoRepositoryCountFoldersPerLevel")
-	private Integer photoRepositoryCountFoldersPerLevel;
 	@JsonProperty("ldifStore")
 	private String ldifStore;
 	@JsonProperty("updateStatus")
 	private Boolean updateStatus;
-	@JsonProperty("svnConfigurationStoreRoot")
-	private String svnConfigurationStoreRoot;
-	@JsonProperty("svnConfigurationStorePassword")
-	private String svnConfigurationStorePassword;
 	@JsonProperty("keystorePath")
 	private String keystorePath;
-	@JsonProperty("keystorePassword")
-	private String keystorePassword;
 	@JsonProperty("allowPersonModification")
 	private Boolean allowPersonModification;
-
-	@JsonProperty("spMetadataPath")
-	private String spMetadataPath;
-	@JsonProperty("logoLocation")
-	private String logoLocation;
-	@JsonProperty("gluuSpAttributes")
-	private List<Object> gluuSpAttributes = null;
 	@JsonProperty("configGeneration")
 	private Boolean configGeneration;
 
@@ -79,30 +40,17 @@ public class OxTrustJsonConfiguration implements Serializable {
 	private String caCertsLocation;
 	@JsonProperty("caCertsPassphrase")
 	private String caCertsPassphrase;
-	@JsonProperty("tempCertDir")
-	private String tempCertDir;
 	@JsonProperty("certDir")
 	private String certDir;
 	@JsonProperty("servicesRestartTrigger")
 	private String servicesRestartTrigger;
-	@JsonProperty("persistSVN")
-	private Boolean persistSVN;
-	@JsonProperty("oxAuthSectorIdentifierUrl")
-	private String oxAuthSectorIdentifierUrl;
-	@JsonProperty("oxAuthClientId")
-	private String oxAuthClientId;
-	@JsonProperty("oxAuthClientPassword")
-	private String oxAuthClientPassword;
-	@JsonProperty("oxAuthClientScope")
-	private String oxAuthClientScope;
+
 	@JsonProperty("loginRedirectUrl")
 	private String loginRedirectUrl;
 	@JsonProperty("logoutRedirectUrl")
 	private String logoutRedirectUrl;
 	@JsonProperty("clientAssociationAttribute")
 	private String clientAssociationAttribute;
-	@JsonProperty("oxAuthIssuer")
-	private String oxAuthIssuer;
 	@JsonProperty("ignoreValidation")
 	private Boolean ignoreValidation;
 	@JsonProperty("umaIssuer")
@@ -136,9 +84,6 @@ public class OxTrustJsonConfiguration implements Serializable {
 	private Boolean enforceEmailUniqueness;
 	@JsonProperty("useLocalCache")
 	private Boolean useLocalCache;
-	@JsonProperty("ScimProperties")
-	@JsonIgnore
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
 	@JsonProperty("baseDN")
 	public String getBaseDN() {
@@ -180,106 +125,6 @@ public class OxTrustJsonConfiguration implements Serializable {
 		this.baseEndpoint = baseEndpoint;
 	}
 
-	@JsonProperty("personObjectClassTypes")
-	public List<String> getPersonObjectClassTypes() {
-		return personObjectClassTypes;
-	}
-
-	@JsonProperty("personObjectClassTypes")
-	public void setPersonObjectClassTypes(List<String> personObjectClassTypes) {
-		this.personObjectClassTypes = personObjectClassTypes;
-	}
-
-	@JsonProperty("personCustomObjectClass")
-	public String getPersonCustomObjectClass() {
-		return personCustomObjectClass;
-	}
-
-	@JsonProperty("personCustomObjectClass")
-	public void setPersonCustomObjectClass(String personCustomObjectClass) {
-		this.personCustomObjectClass = personCustomObjectClass;
-	}
-
-	@JsonProperty("personObjectClassDisplayNames")
-	public List<String> getPersonObjectClassDisplayNames() {
-		return personObjectClassDisplayNames;
-	}
-
-	@JsonProperty("personObjectClassDisplayNames")
-	public void setPersonObjectClassDisplayNames(List<String> personObjectClassDisplayNames) {
-		this.personObjectClassDisplayNames = personObjectClassDisplayNames;
-	}
-
-	@JsonProperty("contactObjectClassTypes")
-	public List<Object> getContactObjectClassTypes() {
-		return contactObjectClassTypes;
-	}
-
-	@JsonProperty("contactObjectClassTypes")
-	public void setContactObjectClassTypes(List<Object> contactObjectClassTypes) {
-		this.contactObjectClassTypes = contactObjectClassTypes;
-	}
-
-	@JsonProperty("contactObjectClassDisplayNames")
-	public List<Object> getContactObjectClassDisplayNames() {
-		return contactObjectClassDisplayNames;
-	}
-
-	@JsonProperty("contactObjectClassDisplayNames")
-	public void setContactObjectClassDisplayNames(List<Object> contactObjectClassDisplayNames) {
-		this.contactObjectClassDisplayNames = contactObjectClassDisplayNames;
-	}
-
-	@JsonProperty("photoRepositoryRootDir")
-	public String getPhotoRepositoryRootDir() {
-		return photoRepositoryRootDir;
-	}
-
-	@JsonProperty("photoRepositoryRootDir")
-	public void setPhotoRepositoryRootDir(String photoRepositoryRootDir) {
-		this.photoRepositoryRootDir = photoRepositoryRootDir;
-	}
-
-	@JsonProperty("photoRepositoryThumbWidth")
-	public Integer getPhotoRepositoryThumbWidth() {
-		return photoRepositoryThumbWidth;
-	}
-
-	@JsonProperty("photoRepositoryThumbWidth")
-	public void setPhotoRepositoryThumbWidth(Integer photoRepositoryThumbWidth) {
-		this.photoRepositoryThumbWidth = photoRepositoryThumbWidth;
-	}
-
-	@JsonProperty("photoRepositoryThumbHeight")
-	public Integer getPhotoRepositoryThumbHeight() {
-		return photoRepositoryThumbHeight;
-	}
-
-	@JsonProperty("photoRepositoryThumbHeight")
-	public void setPhotoRepositoryThumbHeight(Integer photoRepositoryThumbHeight) {
-		this.photoRepositoryThumbHeight = photoRepositoryThumbHeight;
-	}
-
-	@JsonProperty("photoRepositoryCountLeveles")
-	public Integer getPhotoRepositoryCountLeveles() {
-		return photoRepositoryCountLeveles;
-	}
-
-	@JsonProperty("photoRepositoryCountLeveles")
-	public void setPhotoRepositoryCountLeveles(Integer photoRepositoryCountLeveles) {
-		this.photoRepositoryCountLeveles = photoRepositoryCountLeveles;
-	}
-
-	@JsonProperty("photoRepositoryCountFoldersPerLevel")
-	public Integer getPhotoRepositoryCountFoldersPerLevel() {
-		return photoRepositoryCountFoldersPerLevel;
-	}
-
-	@JsonProperty("photoRepositoryCountFoldersPerLevel")
-	public void setPhotoRepositoryCountFoldersPerLevel(Integer photoRepositoryCountFoldersPerLevel) {
-		this.photoRepositoryCountFoldersPerLevel = photoRepositoryCountFoldersPerLevel;
-	}
-
 	@JsonProperty("ldifStore")
 	public String getLdifStore() {
 		return ldifStore;
@@ -300,26 +145,6 @@ public class OxTrustJsonConfiguration implements Serializable {
 		this.updateStatus = updateStatus;
 	}
 
-	@JsonProperty("svnConfigurationStoreRoot")
-	public String getSvnConfigurationStoreRoot() {
-		return svnConfigurationStoreRoot;
-	}
-
-	@JsonProperty("svnConfigurationStoreRoot")
-	public void setSvnConfigurationStoreRoot(String svnConfigurationStoreRoot) {
-		this.svnConfigurationStoreRoot = svnConfigurationStoreRoot;
-	}
-
-	@JsonProperty("svnConfigurationStorePassword")
-	public String getSvnConfigurationStorePassword() {
-		return svnConfigurationStorePassword;
-	}
-
-	@JsonProperty("svnConfigurationStorePassword")
-	public void setSvnConfigurationStorePassword(String svnConfigurationStorePassword) {
-		this.svnConfigurationStorePassword = svnConfigurationStorePassword;
-	}
-
 	@JsonProperty("keystorePath")
 	public String getKeystorePath() {
 		return keystorePath;
@@ -330,16 +155,6 @@ public class OxTrustJsonConfiguration implements Serializable {
 		this.keystorePath = keystorePath;
 	}
 
-	@JsonProperty("keystorePassword")
-	public String getKeystorePassword() {
-		return keystorePassword;
-	}
-
-	@JsonProperty("keystorePassword")
-	public void setKeystorePassword(String keystorePassword) {
-		this.keystorePassword = keystorePassword;
-	}
-
 	@JsonProperty("allowPersonModification")
 	public Boolean getAllowPersonModification() {
 		return allowPersonModification;
@@ -348,36 +163,6 @@ public class OxTrustJsonConfiguration implements Serializable {
 	@JsonProperty("allowPersonModification")
 	public void setAllowPersonModification(Boolean allowPersonModification) {
 		this.allowPersonModification = allowPersonModification;
-	}
-
-	@JsonProperty("spMetadataPath")
-	public String getSpMetadataPath() {
-		return spMetadataPath;
-	}
-
-	@JsonProperty("spMetadataPath")
-	public void setSpMetadataPath(String spMetadataPath) {
-		this.spMetadataPath = spMetadataPath;
-	}
-
-	@JsonProperty("logoLocation")
-	public String getLogoLocation() {
-		return logoLocation;
-	}
-
-	@JsonProperty("logoLocation")
-	public void setLogoLocation(String logoLocation) {
-		this.logoLocation = logoLocation;
-	}
-
-	@JsonProperty("gluuSpAttributes")
-	public List<Object> getGluuSpAttributes() {
-		return gluuSpAttributes;
-	}
-
-	@JsonProperty("gluuSpAttributes")
-	public void setGluuSpAttributes(List<Object> gluuSpAttributes) {
-		this.gluuSpAttributes = gluuSpAttributes;
 	}
 
 	@JsonProperty("configGeneration")
@@ -420,16 +205,6 @@ public class OxTrustJsonConfiguration implements Serializable {
 		this.caCertsPassphrase = caCertsPassphrase;
 	}
 
-	@JsonProperty("tempCertDir")
-	public String getTempCertDir() {
-		return tempCertDir;
-	}
-
-	@JsonProperty("tempCertDir")
-	public void setTempCertDir(String tempCertDir) {
-		this.tempCertDir = tempCertDir;
-	}
-
 	@JsonProperty("certDir")
 	public String getCertDir() {
 		return certDir;
@@ -448,56 +223,6 @@ public class OxTrustJsonConfiguration implements Serializable {
 	@JsonProperty("servicesRestartTrigger")
 	public void setServicesRestartTrigger(String servicesRestartTrigger) {
 		this.servicesRestartTrigger = servicesRestartTrigger;
-	}
-
-	@JsonProperty("persistSVN")
-	public Boolean getPersistSVN() {
-		return persistSVN;
-	}
-
-	@JsonProperty("persistSVN")
-	public void setPersistSVN(Boolean persistSVN) {
-		this.persistSVN = persistSVN;
-	}
-
-	@JsonProperty("oxAuthSectorIdentifierUrl")
-	public String getOxAuthSectorIdentifierUrl() {
-		return oxAuthSectorIdentifierUrl;
-	}
-
-	@JsonProperty("oxAuthSectorIdentifierUrl")
-	public void setOxAuthSectorIdentifierUrl(String oxAuthSectorIdentifierUrl) {
-		this.oxAuthSectorIdentifierUrl = oxAuthSectorIdentifierUrl;
-	}
-
-	@JsonProperty("oxAuthClientId")
-	public String getOxAuthClientId() {
-		return oxAuthClientId;
-	}
-
-	@JsonProperty("oxAuthClientId")
-	public void setOxAuthClientId(String oxAuthClientId) {
-		this.oxAuthClientId = oxAuthClientId;
-	}
-
-	@JsonProperty("oxAuthClientPassword")
-	public String getOxAuthClientPassword() {
-		return oxAuthClientPassword;
-	}
-
-	@JsonProperty("oxAuthClientPassword")
-	public void setOxAuthClientPassword(String oxAuthClientPassword) {
-		this.oxAuthClientPassword = oxAuthClientPassword;
-	}
-
-	@JsonProperty("oxAuthClientScope")
-	public String getOxAuthClientScope() {
-		return oxAuthClientScope;
-	}
-
-	@JsonProperty("oxAuthClientScope")
-	public void setOxAuthClientScope(String oxAuthClientScope) {
-		this.oxAuthClientScope = oxAuthClientScope;
 	}
 
 	@JsonProperty("loginRedirectUrl")
@@ -528,16 +253,6 @@ public class OxTrustJsonConfiguration implements Serializable {
 	@JsonProperty("clientAssociationAttribute")
 	public void setClientAssociationAttribute(String clientAssociationAttribute) {
 		this.clientAssociationAttribute = clientAssociationAttribute;
-	}
-
-	@JsonProperty("oxAuthIssuer")
-	public String getOxAuthIssuer() {
-		return oxAuthIssuer;
-	}
-
-	@JsonProperty("oxAuthIssuer")
-	public void setOxAuthIssuer(String oxAuthIssuer) {
-		this.oxAuthIssuer = oxAuthIssuer;
 	}
 
 	@JsonProperty("ignoreValidation")
@@ -689,15 +404,4 @@ public class OxTrustJsonConfiguration implements Serializable {
 	public void setUseLocalCache(Boolean useLocalCache) {
 		this.useLocalCache = useLocalCache;
 	}
-
-	@JsonAnyGetter
-	public Map<String, Object> getAdditionalProperties() {
-		return this.additionalProperties;
-	}
-
-	@JsonAnySetter
-	public void setAdditionalProperty(String name, Object value) {
-		this.additionalProperties.put(name, value);
-	}
-
 }

@@ -1,7 +1,6 @@
 package org.gluu.oxtrust.api.server.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,7 +21,7 @@ public class ApiConfig implements Serializable{
 	@JsonProperty("apiUmaResourceId")
 	private String apiUmaResourceId;
 	@JsonProperty("apiUmaScopes")
-	private List<Object> apiUmaScopes = null;
+	private String[] apiUmaScopes = null;
 	@JsonProperty("apiUmaClientKeyStoreFile")
 	private String apiUmaClientKeyStoreFile;
 	@JsonProperty("apiUmaClientKeyStorePassword")
@@ -63,13 +62,13 @@ public class ApiConfig implements Serializable{
 	}
 
 	@JsonProperty("apiUmaScopes")
-	public List<Object> getApiUmaScopes() {
+	public String[] getApiUmaScopes() {
 		return apiUmaScopes;
 	}
 
 	@JsonProperty("apiUmaScopes")
-	public void setApiUmaScopes(List<Object> apiUmaScopes) {
-		this.apiUmaScopes = apiUmaScopes;
+	public void setApiUmaScopes(String[] strings) {
+		this.apiUmaScopes = strings;
 	}
 
 	@JsonProperty("apiUmaClientKeyStoreFile")

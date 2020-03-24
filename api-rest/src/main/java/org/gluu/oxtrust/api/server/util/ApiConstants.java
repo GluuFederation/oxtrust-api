@@ -23,6 +23,7 @@ public final class ApiConstants {
 	public static final String RPT = "/rpt";
 	public static final String IDP = "/idp";
 	public static final String API = "/api";
+	public static final String CAPTCHA = "/captcha";
 	public static final String METRIC = "/metric";
 	public static final String CONFIG = "/config";
 	public static final String PROVIDERS = "/providers";
