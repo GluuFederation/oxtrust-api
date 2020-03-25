@@ -31,7 +31,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
-public class PassportConfigurationWebResource extends BaseWebResource {
+public class PassportConfigWebResource extends BaseWebResource {
 
 	@Inject
 	private Logger logger;

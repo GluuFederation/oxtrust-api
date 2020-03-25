@@ -4,7 +4,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
@@ -19,6 +19,7 @@ import org.gluu.oxtrust.service.filter.ProtectedApi;
 import org.slf4j.Logger;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -75,7 +76,7 @@ public class OxTrustConfigurationWebResource extends BaseWebResource {
 		}
 	}
 
-	@PUT
+	@POST
 	@Operation(summary = "Update oxtrust configuration", description = "Update oxtrust configuration")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", content = @Content(schema = @Schema(implementation = AppConfiguration.class)), description = Constants.RESULT_SUCCESS),
@@ -85,7 +86,51 @@ public class OxTrustConfigurationWebResource extends BaseWebResource {
 		try {
 			log(logger, "Processing oxtrust json update request");
 			Preconditions.checkNotNull(oxTrustBasicConfig, "Attempt to update null oxtrust json settings");
-			// jsonConfigurationService.saveOxTrustappConfiguration(appConfiguration);
+			AppConfiguration oxTrustappConfiguration = jsonConfigurationService.getOxTrustappConfiguration();
+			if (!Strings.isNullOrEmpty(oxTrustBasicConfig.getApplicationUrl())) {
+				oxTrustappConfiguration.setApplicationUrl(oxTrustBasicConfig.getApplicationUrl());
+			}
+			if (!Strings.isNullOrEmpty(oxTrustBasicConfig.getBaseDN())) {
+				oxTrustappConfiguration.setBaseDN(oxTrustBasicConfig.getBaseDN());
+			}
+			if (!Strings.isNullOrEmpty(oxTrustBasicConfig.getOrgSupportEmail())) {
+				oxTrustappConfiguration.setOrgSupportEmail(oxTrustBasicConfig.getOrgSupportEmail());
+			}
+			if (!Strings.isNullOrEmpty(oxTrustBasicConfig.getOrganizationName())) {
+				oxTrustappConfiguration.setOrganizationName(oxTrustBasicConfig.getOrganizationName());
+			}
+			if (!Strings.isNullOrEmpty(oxTrustBasicConfig.getBaseEndpoint())) {
+				oxTrustappConfiguration.setBaseEndpoint(oxTrustBasicConfig.getBaseEndpoint());
+			}
+			if (!Strings.isNullOrEmpty(oxTrustBasicConfig.getLdifStore())) {
+				oxTrustappConfiguration.setLdifStore(oxTrustBasicConfig.getLdifStore());
+			}
+			if (!Strings.isNullOrEmpty(oxTrustBasicConfig.getKeystorePath())) {
+				oxTrustappConfiguration.setKeystorePath(oxTrustBasicConfig.getKeystorePath());
+			}
+			if (!Strings.isNullOrEmpty(oxTrustBasicConfig.getCaCertsLocation())) {
+				oxTrustappConfiguration.setCaCertsLocation(oxTrustBasicConfig.getCaCertsLocation());
+			}
+			if (!Strings.isNullOrEmpty(oxTrustBasicConfig.getCaCertsPassphrase())) {
+				oxTrustappConfiguration.setCaCertsPassphrase(oxTrustBasicConfig.getCaCertsPassphrase());
+			}
+			if (!Strings.isNullOrEmpty(oxTrustBasicConfig.getCertDir())) {
+				oxTrustappConfiguration.setCertDir(oxTrustBasicConfig.getCertDir());
+			}
+			if (!Strings.isNullOrEmpty(oxTrustBasicConfig.getLoggingLevel())) {
+				oxTrustappConfiguration.setLoggingLevel(oxTrustBasicConfig.getLoggingLevel());
+			}
+			oxTrustappConfiguration.setUpdateStatus(oxTrustBasicConfig.getUpdateStatus());
+			oxTrustappConfiguration.setEnableUpdateNotification(oxTrustBasicConfig.getEnableUpdateNotification());
+			oxTrustappConfiguration.setAllowPersonModification(oxTrustBasicConfig.getAllowPersonModification());
+			oxTrustappConfiguration
+					.setPasswordResetRequestExpirationTime(oxTrustBasicConfig.getPasswordResetRequestExpirationTime());
+			oxTrustappConfiguration.setCleanServiceInterval(oxTrustBasicConfig.getCleanServiceInterval());
+			oxTrustappConfiguration.setEnforceEmailUniqueness(oxTrustBasicConfig.getEnforceEmailUniqueness());
+			oxTrustappConfiguration.setUseLocalCache(oxTrustBasicConfig.getUseLocalCache());
+			oxTrustappConfiguration.setConfigGeneration(oxTrustBasicConfig.getConfigGeneration());
+			oxTrustappConfiguration.setAllowPersonModification(oxTrustBasicConfig.getAllowPersonModification());
+			jsonConfigurationService.saveOxTrustappConfiguration(oxTrustappConfiguration);
 			return Response.ok(Constants.RESULT_SUCCESS).build();
 		} catch (Exception e) {
 			log(logger, e);
