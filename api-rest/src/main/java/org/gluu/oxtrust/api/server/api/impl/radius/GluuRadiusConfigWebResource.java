@@ -18,11 +18,11 @@ import org.gluu.oxtrust.api.server.util.ApiConstants;
 import org.gluu.oxtrust.model.OxAuthClient;
 import org.gluu.oxtrust.service.ClientService;
 import org.gluu.oxtrust.service.ScopeService;
-import org.gluu.oxtrust.service.custom.CustomScriptService;
 import org.gluu.oxtrust.service.filter.ProtectedApi;
 import org.gluu.oxtrust.service.radius.GluuRadiusConfigService;
 import org.gluu.oxtrust.util.ProductInstallationChecker;
 import org.gluu.radius.model.ServerConfiguration;
+import org.gluu.service.CustomScriptService;
 import org.slf4j.Logger;
 
 import io.swagger.v3.oas.annotations.Operation;
