@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.gluu.config.oxtrust.ScimMode;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -30,8 +31,8 @@ public class ScimConfig implements Serializable {
 	private String scimUmaClientKeyStorePassword;
 	@JsonProperty("scimMaxCount")
 	private Integer scimMaxCount;
-	@JsonProperty("scimTestMode")
-	private Boolean scimTestMode;
+	@JsonProperty("scimProtectionMode")
+	private ScimMode scimProtectionMode;
 
 	@JsonProperty("scimUmaClientId")
 	public String getScimUmaClientId() {
@@ -93,14 +94,14 @@ public class ScimConfig implements Serializable {
 		this.scimUmaClientKeyStorePassword = scimUmaClientKeyStorePassword;
 	}
 	
-	@JsonProperty("scimTestMode")
-	public Boolean getScimTestMode() {
-		return scimTestMode;
+	@JsonProperty("scimProtectionMode")
+	public ScimMode getScimProtectionMode() {
+		return scimProtectionMode;
 	}
 
-	@JsonProperty("scimTestMode")
-	public void setScimTestMode(Boolean scimTestMode) {
-		this.scimTestMode = scimTestMode;
+	@JsonProperty("scimProtectionMode")
+	public void setScimProtectionMode(ScimMode scimProtectionMode) {
+		this.scimProtectionMode = scimProtectionMode;
 	}
 	
 	@JsonProperty("scimMaxCount")
