@@ -33,6 +33,8 @@ public class ScimConfig implements Serializable {
 	private Integer scimMaxCount;
 	@JsonProperty("scimProtectionMode")
 	private ScimMode scimProtectionMode;
+	@JsonProperty("userExtensionSchemaURI")
+	private String userExtensionSchemaURI;
 
 	@JsonProperty("scimUmaClientId")
 	public String getScimUmaClientId() {
@@ -94,24 +96,28 @@ public class ScimConfig implements Serializable {
 		this.scimUmaClientKeyStorePassword = scimUmaClientKeyStorePassword;
 	}
 	
-	@JsonProperty("scimProtectionMode")
 	public ScimMode getScimProtectionMode() {
 		return scimProtectionMode;
 	}
 
-	@JsonProperty("scimProtectionMode")
 	public void setScimProtectionMode(ScimMode scimProtectionMode) {
 		this.scimProtectionMode = scimProtectionMode;
 	}
 	
-	@JsonProperty("scimMaxCount")
 	public Integer getScimMaxCount() {
 		return scimMaxCount;
 	}
 
-	@JsonProperty("scimMaxCount")
 	public void setScimMaxCount(int scimMaxCount) {
 		this.scimMaxCount = scimMaxCount;
+	}
+
+	public String getUserExtensionSchemaURI() {
+		return userExtensionSchemaURI;
+	}
+
+	public void setUserExtensionSchemaURI(String userExtensionSchemaURI) {
+		this.userExtensionSchemaURI = userExtensionSchemaURI;
 	}
 
 }

@@ -60,6 +60,7 @@ public class ScimConfigWebResource extends BaseWebResource {
 			scimConfig.setScimUmaScope(oxTrustappConfiguration.getScimUmaScope());
 			scimConfig.setScimMaxCount(oxTrustappConfiguration.getScimProperties().getMaxCount());
 			scimConfig.setScimProtectionMode(oxTrustappConfiguration.getScimProperties().getProtectionMode());
+			scimConfig.setUserExtensionSchemaURI(oxTrustappConfiguration.getScimProperties().getUserExtensionSchemaURI());
 			return Response.ok(scimConfig).build();
 		} catch (Exception e) {
 			log(logger, e);
@@ -105,6 +106,7 @@ public class ScimConfigWebResource extends BaseWebResource {
 			ScimProperties scimProperties = new ScimProperties();
 			scimProperties.setMaxCount(scimMaxCount);
 			scimProperties.setProtectionMode(mode);
+			scimProperties.setUserExtensionSchemaURI(scimConfig.getUserExtensionSchemaURI());
 			
 			appConfiguration.setScimProperties(scimProperties);
 			jsonConfigurationService.saveOxTrustappConfiguration(appConfiguration);
