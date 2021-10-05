@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import org.gluu.config.oxtrust.ScimMode;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -30,8 +31,10 @@ public class ScimConfig implements Serializable {
 	private String scimUmaClientKeyStorePassword;
 	@JsonProperty("scimMaxCount")
 	private Integer scimMaxCount;
-	@JsonProperty("scimTestMode")
-	private Boolean scimTestMode;
+	@JsonProperty("scimProtectionMode")
+	private ScimMode scimProtectionMode;
+	@JsonProperty("userExtensionSchemaURI")
+	private String userExtensionSchemaURI;
 
 	@JsonProperty("scimUmaClientId")
 	public String getScimUmaClientId() {
@@ -93,24 +96,28 @@ public class ScimConfig implements Serializable {
 		this.scimUmaClientKeyStorePassword = scimUmaClientKeyStorePassword;
 	}
 	
-	@JsonProperty("scimTestMode")
-	public Boolean getScimTestMode() {
-		return scimTestMode;
+	public ScimMode getScimProtectionMode() {
+		return scimProtectionMode;
 	}
 
-	@JsonProperty("scimTestMode")
-	public void setScimTestMode(Boolean scimTestMode) {
-		this.scimTestMode = scimTestMode;
+	public void setScimProtectionMode(ScimMode scimProtectionMode) {
+		this.scimProtectionMode = scimProtectionMode;
 	}
 	
-	@JsonProperty("scimMaxCount")
 	public Integer getScimMaxCount() {
 		return scimMaxCount;
 	}
 
-	@JsonProperty("scimMaxCount")
 	public void setScimMaxCount(int scimMaxCount) {
 		this.scimMaxCount = scimMaxCount;
+	}
+
+	public String getUserExtensionSchemaURI() {
+		return userExtensionSchemaURI;
+	}
+
+	public void setUserExtensionSchemaURI(String userExtensionSchemaURI) {
+		this.userExtensionSchemaURI = userExtensionSchemaURI;
 	}
 
 }

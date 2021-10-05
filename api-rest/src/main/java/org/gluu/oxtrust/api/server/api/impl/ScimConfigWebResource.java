@@ -1,5 +1,7 @@
 package org.gluu.oxtrust.api.server.api.impl;
 
+import java.util.Optional;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -50,7 +52,6 @@ public class ScimConfigWebResource extends BaseWebResource {
 			log(logger, "Retrieving SCIM configuration");
 			AppConfiguration oxTrustappConfiguration = jsonConfigurationService.getOxTrustappConfiguration();
 			ScimConfig scimConfig = new ScimConfig();
-			scimConfig.setScimTestMode(oxTrustappConfiguration.isScimTestMode());
 			scimConfig.setScimUmaClientId(oxTrustappConfiguration.getScimUmaClientId());
 			scimConfig.setScimUmaClientKeyId(oxTrustappConfiguration.getScimUmaClientKeyId());
 			scimConfig.setScimUmaClientKeyStoreFile(oxTrustappConfiguration.getScimUmaClientKeyStoreFile());
@@ -58,6 +59,8 @@ public class ScimConfigWebResource extends BaseWebResource {
 			scimConfig.setScimUmaResourceId(oxTrustappConfiguration.getScimUmaResourceId());
 			scimConfig.setScimUmaScope(oxTrustappConfiguration.getScimUmaScope());
 			scimConfig.setScimMaxCount(oxTrustappConfiguration.getScimProperties().getMaxCount());
+			scimConfig.setScimProtectionMode(oxTrustappConfiguration.getScimProperties().getProtectionMode());
+			scimConfig.setUserExtensionSchemaURI(oxTrustappConfiguration.getScimProperties().getUserExtensionSchemaURI());
 			return Response.ok(scimConfig).build();
 		} catch (Exception e) {
 			log(logger, e);
@@ -95,12 +98,17 @@ public class ScimConfigWebResource extends BaseWebResource {
 				appConfiguration.setScimUmaScope(scimConfig.getScimUmaScope());
 			}
 			Integer scimMaxCount = scimConfig.getScimMaxCount();
-			ScimProperties scimProperties = new ScimProperties();
-			if (scimMaxCount != null && scimMaxCount != 0) {
-				scimProperties.setMaxCount(scimMaxCount);
-				appConfiguration.setScimProperties(scimProperties);
+			if (scimMaxCount == null || scimMaxCount <= 0) {
+				scimMaxCount = appConfiguration.getScimProperties().getMaxCount();
 			}
-			appConfiguration.setScimTestMode(scimConfig.getScimTestMode());
+			ScimMode mode = Optional.ofNullable(scimConfig.getScimProtectionMode()).orElse(ScimMode.OAUTH);
+			
+			ScimProperties scimProperties = new ScimProperties();
+			scimProperties.setMaxCount(scimMaxCount);
+			scimProperties.setProtectionMode(mode);
+			scimProperties.setUserExtensionSchemaURI(scimConfig.getUserExtensionSchemaURI());
+			
+			appConfiguration.setScimProperties(scimProperties);
 			jsonConfigurationService.saveOxTrustappConfiguration(appConfiguration);
 			return Response.ok(Constants.RESULT_SUCCESS).build();
 		} catch (Exception e) {
