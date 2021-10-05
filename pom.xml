@@ -215,7 +215,7 @@
 
 			<!-- Jython -->
 			<dependency>
-				<groupId>org.python</groupId>
+				<groupId>org.gluufederation</groupId>
 				<artifactId>jython-standalone</artifactId>
 				<version>2.7.1</version>
 			</dependency>
