@@ -191,7 +191,7 @@ public class PeopleWebResource extends BaseWebResource {
 		gluuCustomPerson.setDisplayName(person.getDisplayName());
 		gluuCustomPerson.setSurname(person.getSurName());
 		gluuCustomPerson.setCreationDate(person.getCreationDate());
-		gluuCustomPerson.setStatus(person.getStatus());
+		gluuCustomPerson.setStatus(person.getStatus().toString());
 		gluuCustomPerson.setUserPassword(person.getPassword());
 		gluuCustomPerson.setAttribute("oxTrustActive", "true");
 		return gluuCustomPerson;
@@ -203,7 +203,7 @@ public class PeopleWebResource extends BaseWebResource {
 		gluuCustomPerson.setCreationDate(person.getCreationDate());
 		gluuCustomPerson.setMail(person.getEmail());
 		gluuCustomPerson.setGivenName(person.getGivenName());
-		gluuCustomPerson.setStatus(person.getStatus());
+		gluuCustomPerson.setStatus(person.getStatus().toString());
 		gluuCustomPerson.setSurname(person.getSurName());
 		gluuCustomPerson.setUserPassword(person.getPassword());
 		gluuCustomPerson.setAttribute("oxTrustActive", "true");

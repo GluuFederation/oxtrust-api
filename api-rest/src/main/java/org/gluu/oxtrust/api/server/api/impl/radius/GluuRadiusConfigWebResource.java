@@ -18,7 +18,7 @@ import org.gluu.oxtrust.api.server.util.ApiConstants;
 import org.gluu.oxtrust.model.OxAuthClient;
 import org.gluu.oxtrust.service.ClientService;
 import org.gluu.oxtrust.service.ScopeService;
-import org.gluu.oxtrust.service.custom.CustomScriptService;
+import org.gluu.service.custom.CustomScriptService;
 import org.gluu.oxtrust.service.filter.ProtectedApi;
 import org.gluu.oxtrust.service.radius.GluuRadiusConfigService;
 import org.gluu.oxtrust.util.ProductInstallationChecker;
