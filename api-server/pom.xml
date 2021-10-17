@@ -359,6 +359,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.gluu</groupId>
+			<artifactId>oxcore-timer-weld</artifactId>
+			<version>${oxcore.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.gluu</groupId>
 			<artifactId>oxcore-saml</artifactId>
 			<exclusions>
 				<exclusion>
@@ -446,10 +451,11 @@
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpcore</artifactId>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
-		</dependency>
+		</dependency> -->
 
 		<!-- LDAP -->
 		<dependency>
@@ -700,10 +706,11 @@
 					<groupId>javax.enterprise</groupId>
 					<artifactId>cdi-api</artifactId>
 				</dependency>
+				<!--
 				<dependency>
 					<groupId>org.glassfish</groupId>
 					<artifactId>javax.faces</artifactId>
-				</dependency>
+				</dependency> -->
 
 				<dependency>
 					<groupId>org.glassfish.web</groupId>

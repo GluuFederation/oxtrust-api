@@ -40,7 +40,7 @@ public class GluuPersonApi implements Serializable {
 		this.email = person.getMail();
 		this.password = person.getUserPassword();
 		this.userName = person.getUid();
-		this.status = person.getStatus();
+		this.status = GluuStatus.getByValue(person.getStatus());
 	}
 
 	public String getInum() {

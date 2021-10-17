@@ -37,4 +37,9 @@ public class LoggerService extends org.gluu.service.logger.LoggerService {
         return configurationService.getConfiguration().getOxLogConfigLocation();
     }
 
+    @Override
+    public String getLoggingLayout() {
+        return appConfiguration.getLoggingLayout();
+    }
+
 }

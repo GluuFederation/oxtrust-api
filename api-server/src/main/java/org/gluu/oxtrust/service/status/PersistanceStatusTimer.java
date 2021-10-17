@@ -45,9 +45,6 @@ public class PersistanceStatusTimer {
 	@Inject @Named(ApplicationFactory.PERSISTENCE_ENTRY_MANAGER_NAME)
     private PersistenceEntryManager ldapEntryManager;
 
-	@Inject @Named(ApplicationFactory.PERSISTENCE_CENTRAL_ENTRY_MANAGER_NAME)
-    private PersistenceEntryManager ldapCentralEntryManager;
-
     private AtomicBoolean isActive;
 
     public void initTimer() {

@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.gluu.config.oxtrust.ScimMode;
 import org.gluu.config.oxtrust.AppConfiguration;
 import org.gluu.config.oxtrust.ScimProperties;
 import org.gluu.oxtrust.api.server.model.ScimConfig;
@@ -20,6 +21,7 @@ import org.gluu.oxtrust.api.server.util.Constants;
 import org.gluu.oxtrust.service.JsonConfigurationService;
 import org.gluu.oxtrust.service.filter.ProtectedApi;
 import org.slf4j.Logger;
+
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;

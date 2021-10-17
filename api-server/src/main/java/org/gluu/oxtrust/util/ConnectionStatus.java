@@ -7,7 +7,7 @@ import java.util.Properties;
 
 import javax.inject.Inject;
 
-import org.gluu.oxtrust.config.ConfigurationFactory;
+import org.gluu.oxtrust.service.config.ConfigurationFactory;
 import org.gluu.persist.ldap.impl.LdapEntryManagerFactory;
 import org.gluu.persist.ldap.operation.impl.LdapConnectionProvider;
 import org.gluu.util.properties.FileConfiguration;
@@ -36,7 +36,7 @@ public class ConnectionStatus {
 	}
 
 	private FileConfiguration loadFileConfiguration() {
-		FileConfiguration configuration = new FileConfiguration(ConfigurationFactory.LDAP_PROPERTIES_FILE);
+		FileConfiguration configuration = new FileConfiguration(ConfigurationFactory.APP_PROPERTIES_FILE);
 		if (!configuration.isLoaded()) {
 			configuration = new FileConfiguration(LdapEntryManagerFactory.LDAP_DEFAULT_PROPERTIES_FILE);
 		}
