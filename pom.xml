@@ -52,6 +52,10 @@
 			<url>https://repository.jboss.org/nexus/content/groups/public-jboss/</url>
 		</repository>
 		<repository>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
 			<id>gluu</id>
 			<name>Gluu repository</name>
 			<url>https://maven.gluu.org/maven</url>
