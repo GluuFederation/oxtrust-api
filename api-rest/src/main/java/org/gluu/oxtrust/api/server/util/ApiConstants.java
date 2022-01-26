@@ -45,15 +45,19 @@ public final class ApiConstants {
 	public static final String STRATEGIES = "/strategies";
 	public static final String OXTRUST_JSONSETTINGS = "/oxtrust/settings";
 	public static final String OXAUTH_JSONSETTINGS = "/oxauth/settings";
+	public static final String OXTRUST_SETTINGS = "/settings";
 	public static final String SMTP = "/smtp";
 	public static final String OXTRUST = "/oxtrust";
 	public static final String OXAUTH = "/oxauth";
+	public static final String INBOUNDSAML = "/inbound-saml";
+	public static final String TRUSTEDIDP = "/trusted-idp";
 	
 	public static final String UMA = "/uma";
 	public static final String RESOURCES = "/resources";
 	public static final String RADIUS_SETTINGS = "/radius/settings";
 	public static final String RADIUS_CLIENTS = "/radius/clients";
 	public static final String INUM_PARAM_PATH = "/{inum}";
+	public static final String REMOTEIDPHOST = "/{remoteIdpHost}";
 	public static final String NAME_PARAM_PATH = "/{name}";
 	public static final String TYPE_PARAM_PATH = "/{type}";
 	public static final String ID_PARAM_PATH = "/{id}";
