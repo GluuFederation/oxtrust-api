@@ -97,7 +97,7 @@ public class TrustedIDPWebResource  extends BaseWebResource{
 			trustedIDPApi = copyParameters(oxTrustedIdp);
 			return Response.ok(trustedIDPApi).build();
 		} catch (Exception e) {
-		log(logger, e);
+			log(logger, e);
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
@@ -125,7 +125,7 @@ public class TrustedIDPWebResource  extends BaseWebResource{
 			trustedIDPApi = copyParameters(oxTrustedIdp);
 			return Response.ok(trustedIDPApi).build();
 		} catch (Exception e) {
-		log(logger, e);
+			log(logger, e);
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
@@ -159,8 +159,7 @@ public class TrustedIDPWebResource  extends BaseWebResource{
 					"  \"message\": \"Created\"\r\n" + 
 					"}").build();
 		} catch (Exception e) {
-			log(logger, e.getLocalizedMessage());
-			e.printStackTrace();
+			log(logger, e);
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
@@ -196,11 +195,8 @@ public class TrustedIDPWebResource  extends BaseWebResource{
 			return Response.status(Response.Status.NO_CONTENT)
 					.entity(returnTrustedIDPApi).build();
 		} catch (Exception e) {
-			log(logger,e.getLocalizedMessage());
-			e.printStackTrace();
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\r\n" + 
-					"  \"message\": \"Internal Server Error, please contact admin\"\r\n" + 
-					"}").build();
+			log(logger, e);
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 	
@@ -219,8 +215,7 @@ public class TrustedIDPWebResource  extends BaseWebResource{
 
 			return Response.status(Response.Status.OK).build();
 		} catch (Exception e) {
-			log(logger,e.getLocalizedMessage());
-			e.printStackTrace();
+			log(logger, e);
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
