@@ -7,9 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SingleSignOnServices  implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -7253683158021416550L;
 	private String binding;
 	private String location;
