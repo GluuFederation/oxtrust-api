@@ -104,34 +104,6 @@ paths:
           description: default response
           content:
             application/json: {}
-  /api/v1/attributes/inactive:
-    get:
-      summary: Get all inactive attributes
-      description: Gets all inative attributes
-      operationId: getAllInactiveAttributes
-      responses:
-        200:
-          description: success
-          content:
-            application/json:
-              schema:
-                type: string
-        500:
-          description: Server error
-  /api/v1/attributes/active:
-    get:
-      summary: Get all active attributes
-      description: Gets all the active gluu attributes
-      operationId: getAllActiveAttributes
-      responses:
-        200:
-          description: success
-          content:
-            application/json:
-              schema:
-                type: string
-        500:
-          description: Server error
   /api/v1/attributes/attribute/{inum}:
     get:
       summary: Get attribute by inum
@@ -194,6 +166,34 @@ paths:
           description: success
         404:
           description: Not found
+        500:
+          description: Server error
+  /api/v1/attributes/active:
+    get:
+      summary: Get all active attributes
+      description: Gets all the active gluu attributes
+      operationId: getAllActiveAttributes
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: Server error
+  /api/v1/attributes/inactive:
+    get:
+      summary: Get all inactive attributes
+      description: Gets all inative attributes
+      operationId: getAllInactiveAttributes
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: string
         500:
           description: Server error
   /api/v1/acrs:
@@ -409,41 +409,6 @@ paths:
                 type: string
         500:
           description: Server error
-  /api/v1/clients/{inum}/scopes:
-    get:
-      summary: Get assigned OIDC client scopes
-      description: Get OIDC scopes assign to OIDC client
-      operationId: getClientScope
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: string
-        500:
-          description: Server error
-        404:
-          description: Not Found
-    delete:
-      operationId: deleteClientScopes
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
   /api/v1/clients/{inum}:
     get:
       summary: Get OIDC client
@@ -483,6 +448,41 @@ paths:
                 type: string
         500:
           description: Server error
+  /api/v1/clients/{inum}/scopes:
+    get:
+      summary: Get assigned OIDC client scopes
+      description: Get OIDC scopes assign to OIDC client
+      operationId: getClientScope
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: Server error
+        404:
+          description: Not Found
+    delete:
+      operationId: deleteClientScopes
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
   /api/v1/clients/search:
     get:
       summary: Search OIDC clients
@@ -521,6 +521,56 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GluuConfiguration'
+        500:
+          description: Server error
+  /api/v1/configuration/scripts:
+    get:
+      summary: Get all custom scripts
+      description: Get all custom scripts
+      operationId: listCustomScripts
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: Server error
+    put:
+      summary: Update custom script
+      description: Update custom script
+      operationId: updateCustomScript
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomScript'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomScript'
+        500:
+          description: Server error
+    post:
+      summary: Add new custom script
+      description: Add new custom script
+      operationId: createCustomScript
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomScript'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomScript'
         500:
           description: Server error
   /api/v1/configuration/scripts/{inum}:
@@ -578,56 +628,6 @@ paths:
                 type: string
         500:
           description: Server error
-  /api/v1/configuration/scripts:
-    get:
-      summary: Get all custom scripts
-      description: Get all custom scripts
-      operationId: listCustomScripts
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: string
-        500:
-          description: Server error
-    put:
-      summary: Update custom script
-      description: Update custom script
-      operationId: updateCustomScript
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomScript'
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomScript'
-        500:
-          description: Server error
-    post:
-      summary: Add new custom script
-      description: Add new custom script
-      operationId: createCustomScript
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomScript'
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomScript'
-        500:
-          description: Server error
   /api/v1/groups:
     get:
       summary: Get groups
@@ -683,6 +683,86 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GluuGroupApi'
+        500:
+          description: Server error
+  /api/v1/groups/{inum}/members:
+    get:
+      summary: Get group members
+      description: Get a group members
+      operationId: getGroupMembers
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: Server error
+    delete:
+      summary: Delete group member
+      description: Delete group member
+      operationId: deleteGroupMembers
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+  /api/v1/groups/{inum}/members/{minum}:
+    post:
+      summary: Add group member
+      description: Add group member
+      operationId: addGroupMember
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: minum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: string
+        500:
+          description: Server error
+    delete:
+      summary: Remove group member
+      description: Remove a member from group
+      operationId: removeGroupMember
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: minum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
         500:
           description: Server error
   /api/v1/groups/{inum}:
@@ -746,86 +826,6 @@ paths:
                 type: string
         500:
           description: Server error
-  /api/v1/groups/{inum}/members/{minum}:
-    post:
-      summary: Add group member
-      description: Add group member
-      operationId: addGroupMember
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: minum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: string
-        500:
-          description: Server error
-    delete:
-      summary: Remove group member
-      description: Remove a member from group
-      operationId: removeGroupMember
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: minum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
-        500:
-          description: Server error
-  /api/v1/groups/{inum}/members:
-    get:
-      summary: Get group members
-      description: Get a group members
-      operationId: getGroupMembers
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: string
-        500:
-          description: Server error
-    delete:
-      summary: Delete group member
-      description: Delete group member
-      operationId: deleteGroupMembers
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
   /configuration/idp:
     get:
       summary: Retrieve idp configuration
@@ -904,23 +904,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/LdapConfigurationDTO'
-  /api/v1/configuration/ldap/status:
-    post:
-      summary: Check status of a configuration
-      description: Check the status of a configuration
-      operationId: getLdapConfigurationStatus
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/LdapConnectionData'
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ConnectionStatusDTO'
   /api/v1/configuration/ldap/{name}/status:
     get:
       summary: Check the status of an existing configuration
@@ -957,6 +940,23 @@ paths:
             application/json:
               schema:
                 type: string
+  /api/v1/configuration/ldap/status:
+    post:
+      summary: Check status of a configuration
+      description: Check the status of a configuration
+      operationId: getLdapConfigurationStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LdapConnectionData'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectionStatusDTO'
   /configuration/metric:
     get:
       summary: Retrieve metric configuration
@@ -1209,6 +1209,41 @@ paths:
           description: Success
         500:
           description: Server error
+  /api/v1/users/{inum}:
+    get:
+      summary: Get person by inum
+      description: Get a person by inum
+      operationId: getPersonByInum
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GluuPersonApi'
+        500:
+          description: Server error
+    delete:
+      summary: Delete person
+      description: Delete a person
+      operationId: deletePerson
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+        500:
+          description: Server error
   /api/v1/users:
     get:
       summary: Get people
@@ -1257,41 +1292,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GluuPersonApi'
-        500:
-          description: Server error
-  /api/v1/users/{inum}:
-    get:
-      summary: Get person by inum
-      description: Get a person by inum
-      operationId: getPersonByInum
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GluuPersonApi'
-        500:
-          description: Server error
-    delete:
-      summary: Delete person
-      description: Delete a person
-      operationId: deletePerson
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
         500:
           description: Server error
   /api/v1/users/search:
@@ -1378,6 +1378,41 @@ paths:
                 $ref: '#/components/schemas/ScimConfig'
         500:
           description: Server error
+  /api/v1/scopes/{inum}:
+    get:
+      summary: Get openid scope
+      description: Get a specific openid connect scope
+      operationId: getScopeByInum
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scope'
+        500:
+          description: Server error
+    delete:
+      summary: Delete openid connect scope
+      description: Delete an openidconnect scope
+      operationId: deleteScope
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+        500:
+          description: Server error
   /api/v1/scopes:
     get:
       summary: Get all scopes
@@ -1428,41 +1463,6 @@ paths:
                 $ref: '#/components/schemas/Scope'
         500:
           description: Server error
-  /api/v1/scopes/{inum}:
-    get:
-      summary: Get openid scope
-      description: Get a specific openid connect scope
-      operationId: getScopeByInum
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Scope'
-        500:
-          description: Server error
-    delete:
-      summary: Delete openid connect scope
-      description: Delete an openidconnect scope
-      operationId: deleteScope
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
-        500:
-          description: Server error
   /api/v1/scopes/{inum}/claims:
     get:
       summary: Get scope claims
@@ -1508,6 +1508,22 @@ paths:
                 type: string
         500:
           description: Server error
+  /api/v1/sectoridentifiers/{inum}:
+    delete:
+      summary: Delete sector identifier
+      description: Delete a sector identifier
+      operationId: deleteSectorIdentifier
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+        500:
+          description: Server error
   /api/v1/sectoridentifiers/search:
     get:
       summary: Search sector identifiers
@@ -1531,42 +1547,6 @@ paths:
             application/json:
               schema:
                 type: string
-        500:
-          description: Server error
-  /api/v1/sectoridentifiers/sector/{id}:
-    get:
-      summary: Get sector identifier
-      description: Get a sector identifier
-      operationId: getSectorIdentifierById
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OxAuthSectorIdentifier'
-        500:
-          description: Server error
-  /api/v1/sectoridentifiers/{inum}:
-    delete:
-      summary: Delete sector identifier
-      description: Delete a sector identifier
-      operationId: deleteSectorIdentifier
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
         500:
           description: Server error
   /api/v1/sectoridentifiers:
@@ -1610,6 +1590,26 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/OxAuthSectorIdentifier'
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OxAuthSectorIdentifier'
+        500:
+          description: Server error
+  /api/v1/sectoridentifiers/sector/{id}:
+    get:
+      summary: Get sector identifier
+      description: Get a sector identifier
+      operationId: getSectorIdentifierById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         200:
           description: Success
@@ -1832,32 +1832,136 @@ paths:
           description: Resource not Found
         500:
           description: Server error
-  /api/v1/uma/resources/search:
+  /api/v1/uma/resources/{id}/scopes:
     get:
-      summary: Search UMA resources
-      description: Search uma resources
-      operationId: searchUmaResources
+      summary: Get UMA resource scopes
+      description: Get scopes of uma resource
+      operationId: getUmaResourceScopes
       parameters:
-      - name: pattern
-        in: query
+      - name: id
+        in: path
         required: true
         schema:
           type: string
-      - name: size
-        in: query
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
+  /api/v1/uma/resources/{id}/clients/{inum}:
+    post:
+      summary: Add UMA resource client
+      description: add client to uma resource
+      operationId: addClientToUmaResource
+      parameters:
+      - name: id
+        in: path
         required: true
         schema:
-          type: integer
-          format: int32
+          type: string
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        201:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UmaResource'
+        500:
+          description: Server error
+    delete:
+      summary: Remove UMA resource client
+      description: Remove client from uma resource
+      operationId: removeClientToUmaResource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
       responses:
         200:
           description: Success
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/UmaResource'
         500:
           description: Server error
+  /api/v1/uma/resources/{id}/scopes/{inum}:
+    post:
+      summary: Add UMA resource scope
+      description: add scope to uma resource
+      operationId: addScopeToUmaResource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UmaResource'
+        500:
+          description: Server error
+    delete:
+      summary: Remove UMA resource scope
+      description: remove a scope from uma resource
+      operationId: removeScopeToUmaResource
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UmaResource'
+        500:
+          description: Server error
+  /api/v1/uma/resources/{id}/clients:
+    get:
+      summary: Get clients of UMA resources
+      description: Get clients of uma resource
+      operationId: getUmaResourceClients
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          description: default response
+          content:
+            application/json: {}
   /api/v1/uma/resources:
     get:
       summary: Get UMA resources
@@ -1943,169 +2047,30 @@ paths:
           description: Success
         500:
           description: Server error
-  /api/v1/uma/resources/{id}/clients/{inum}:
-    post:
-      summary: Add UMA resource client
-      description: add client to uma resource
-      operationId: addClientToUmaResource
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        201:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UmaResource'
-        500:
-          description: Server error
-    delete:
-      summary: Remove UMA resource client
-      description: Remove client from uma resource
-      operationId: removeClientToUmaResource
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UmaResource'
-        500:
-          description: Server error
-  /api/v1/uma/resources/{id}/clients:
+  /api/v1/uma/resources/search:
     get:
-      summary: Get clients of UMA resources
-      description: Get clients of uma resource
-      operationId: getUmaResourceClients
+      summary: Search UMA resources
+      description: Search uma resources
+      operationId: searchUmaResources
       parameters:
-      - name: id
-        in: path
+      - name: pattern
+        in: query
         required: true
         schema:
           type: string
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-  /api/v1/uma/resources/{id}/scopes:
-    get:
-      summary: Get UMA resource scopes
-      description: Get scopes of uma resource
-      operationId: getUmaResourceScopes
-      parameters:
-      - name: id
-        in: path
+      - name: size
+        in: query
         required: true
         schema:
-          type: string
-      responses:
-        default:
-          description: default response
-          content:
-            application/json: {}
-  /api/v1/uma/resources/{id}/scopes/{inum}:
-    post:
-      summary: Add UMA resource scope
-      description: add scope to uma resource
-      operationId: addScopeToUmaResource
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
+          type: integer
+          format: int32
       responses:
         200:
           description: Success
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UmaResource'
-        500:
-          description: Server error
-    delete:
-      summary: Remove UMA resource scope
-      description: remove a scope from uma resource
-      operationId: removeScopeToUmaResource
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UmaResource'
-        500:
-          description: Server error
-  /api/v1/uma/scopes/{inum}:
-    get:
-      summary: Get UMA scope by inum
-      description: Get a uma scope by inum
-      operationId: getUmaScopeByInum
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Scope'
-        500:
-          description: Server error
-    delete:
-      summary: Delete UMA scope
-      description: Delete a uma scope
-      operationId: deleteUmaScope
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: success
+                type: string
         500:
           description: Server error
   /api/v1/uma/scopes:
@@ -2158,6 +2123,41 @@ paths:
                 $ref: '#/components/schemas/Scope'
         500:
           description: Server error
+  /api/v1/uma/scopes/{inum}:
+    get:
+      summary: Get UMA scope by inum
+      description: Get a uma scope by inum
+      operationId: getUmaScopeByInum
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Scope'
+        500:
+          description: Server error
+    delete:
+      summary: Delete UMA scope
+      description: Delete a uma scope
+      operationId: deleteUmaScope
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: success
+        500:
+          description: Server error
   /api/v1/uma/scopes/search:
     get:
       summary: Search UMA scopes
@@ -2178,49 +2178,6 @@ paths:
                 type: string
         500:
           description: Server error
-  /api/v1/radius/clients/{inum}:
-    get:
-      summary: Get radius client by inum
-      description: Get radius client by inum
-      operationId: getRadiusClient
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        200:
-          description: Success
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RadiusClient'
-        403:
-          description: Gluu Radius is not installed
-        404:
-          description: Radius client not found
-        500:
-          description: Internal server error
-    delete:
-      summary: Delete radius client
-      description: Deletes a radius client
-      operationId: deleteRadiusClient
-      parameters:
-      - name: inum
-        in: path
-        required: true
-        schema:
-          type: string
-      responses:
-        204:
-          description: Success
-        403:
-          description: Gluu Radius is not installed
-        404:
-          description: Radius client not found
-        500:
-          description: Internal server error
   /api/v1/radius/clients:
     get:
       summary: Get all radius clients
@@ -2281,6 +2238,49 @@ paths:
           description: Malformed request. Missing parameter
         403:
           description: Gluu Radius is not installed
+        500:
+          description: Internal server error
+  /api/v1/radius/clients/{inum}:
+    get:
+      summary: Get radius client by inum
+      description: Get radius client by inum
+      operationId: getRadiusClient
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RadiusClient'
+        403:
+          description: Gluu Radius is not installed
+        404:
+          description: Radius client not found
+        500:
+          description: Internal server error
+    delete:
+      summary: Delete radius client
+      description: Deletes a radius client
+      operationId: deleteRadiusClient
+      parameters:
+      - name: inum
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        204:
+          description: Success
+        403:
+          description: Gluu Radius is not installed
+        404:
+          description: Radius client not found
         500:
           description: Internal server error
   /api/v1/radius/settings:
@@ -2454,7 +2454,11 @@ components:
           $ref: '#/components/schemas/AttributeValidation'
         gluuTooltip:
           type: string
-        whitePagesCanView:
+        adminCanEdit:
+          type: boolean
+        adminCanView:
+          type: boolean
+        userCanAccess:
           type: boolean
         userCanView:
           type: boolean
@@ -2462,11 +2466,7 @@ components:
           type: boolean
         adminCanAccess:
           type: boolean
-        adminCanEdit:
-          type: boolean
-        userCanAccess:
-          type: boolean
-        adminCanView:
+        whitePagesCanView:
           type: boolean
         baseDn:
           type: string
@@ -3455,13 +3455,13 @@ components:
           type: boolean
         internal:
           type: boolean
-        locationPath:
-          type: string
         locationType:
           type: string
           enum:
           - ldap
           - file
+        locationPath:
+          type: string
         baseDn:
           type: string
     ScriptError:
@@ -4073,6 +4073,79 @@ components:
           format: int32
         cookieDomain:
           type: string
+    OxTrustBasicConfig:
+      type: object
+      properties:
+        baseDN:
+          type: string
+        orgSupportEmail:
+          type: string
+        applicationUrl:
+          type: string
+        baseEndpoint:
+          type: string
+        ldifStore:
+          type: string
+        updateStatus:
+          type: boolean
+        keystorePath:
+          type: string
+        allowPersonModification:
+          type: boolean
+        configGeneration:
+          type: boolean
+        gluuSpCert:
+          type: string
+        caCertsLocation:
+          type: string
+        caCertsPassphrase:
+          type: string
+        certDir:
+          type: string
+        servicesRestartTrigger:
+          type: string
+        loginRedirectUrl:
+          type: string
+        logoutRedirectUrl:
+          type: string
+        clientAssociationAttribute:
+          type: string
+        ignoreValidation:
+          type: boolean
+        umaIssuer:
+          type: string
+        cssLocation:
+          type: string
+        jsLocation:
+          type: string
+        enableUpdateNotification:
+          type: boolean
+        oxIncommonFlag:
+          type: boolean
+        clientWhiteList:
+          type: array
+          items:
+            type: string
+        clientBlackList:
+          type: array
+          items:
+            type: string
+        loggingLevel:
+          type: string
+        organizationName:
+          type: string
+        disableJdkLogger:
+          type: boolean
+        passwordResetRequestExpirationTime:
+          type: integer
+          format: int32
+        cleanServiceInterval:
+          type: integer
+          format: int32
+        enforceEmailUniqueness:
+          type: boolean
+        useLocalCache:
+          type: boolean
     AppConfiguration:
       type: object
       properties:
@@ -4307,79 +4380,6 @@ components:
           - BYPASS
         userExtensionSchemaURI:
           type: string
-    OxTrustBasicConfig:
-      type: object
-      properties:
-        baseDN:
-          type: string
-        orgSupportEmail:
-          type: string
-        applicationUrl:
-          type: string
-        baseEndpoint:
-          type: string
-        ldifStore:
-          type: string
-        updateStatus:
-          type: boolean
-        keystorePath:
-          type: string
-        allowPersonModification:
-          type: boolean
-        configGeneration:
-          type: boolean
-        gluuSpCert:
-          type: string
-        caCertsLocation:
-          type: string
-        caCertsPassphrase:
-          type: string
-        certDir:
-          type: string
-        servicesRestartTrigger:
-          type: string
-        loginRedirectUrl:
-          type: string
-        logoutRedirectUrl:
-          type: string
-        clientAssociationAttribute:
-          type: string
-        ignoreValidation:
-          type: boolean
-        umaIssuer:
-          type: string
-        cssLocation:
-          type: string
-        jsLocation:
-          type: string
-        enableUpdateNotification:
-          type: boolean
-        oxIncommonFlag:
-          type: boolean
-        clientWhiteList:
-          type: array
-          items:
-            type: string
-        clientBlackList:
-          type: array
-          items:
-            type: string
-        loggingLevel:
-          type: string
-        organizationName:
-          type: string
-        disableJdkLogger:
-          type: boolean
-        passwordResetRequestExpirationTime:
-          type: integer
-          format: int32
-        cleanServiceInterval:
-          type: integer
-          format: int32
-        enforceEmailUniqueness:
-          type: boolean
-        useLocalCache:
-          type: boolean
     AuthzParams:
       type: object
       properties:
@@ -4615,6 +4615,23 @@ components:
           type: string
         allowProfileManagement:
           type: string
+    RemoteIdp:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        host:
+          type: string
+        signingCertificates:
+          type: array
+          items:
+            type: string
+        supportedSingleSignOnServices:
+          type: array
+          items:
+            $ref: '#/components/schemas/SingleSignOnServices'
     SingleSignOnServices:
       type: object
       properties:
@@ -4625,16 +4642,8 @@ components:
     TrustedIDPApi:
       type: object
       properties:
-        name:
-          type: string
-        host:
-          type: string
-        signingCertificates:
-          type: string
-        supportedSingleSignOnServices:
-          type: array
-          items:
-            $ref: '#/components/schemas/SingleSignOnServices'
+        remoteIdp:
+          $ref: '#/components/schemas/RemoteIdp'
         selectedSingleSignOnService:
           $ref: '#/components/schemas/SingleSignOnServices'
     UmaResource:

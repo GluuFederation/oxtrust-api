@@ -1,5 +1,6 @@
 package org.gluu.oxtrust.api.server.api.impl;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,16 +19,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.gluu.oxtrust.api.server.model.TrustedIDPApi;
+import org.gluu.oxtrust.api.server.model.RemoteIdp;
 import org.gluu.oxtrust.api.server.model.SingleSignOnServices;
 import org.gluu.oxtrust.api.server.util.ApiConstants;
 import org.gluu.oxtrust.model.OxTrustedIdp;
 import org.gluu.oxtrust.service.TrustedIDPService;
 import org.gluu.oxtrust.service.filter.ProtectedApi;
+import org.gluu.service.JsonService;
 import org.slf4j.Logger;
 import javax.enterprise.context.ApplicationScoped;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -46,6 +46,8 @@ public class TrustedIDPWebResource  extends BaseWebResource{
 	@Inject
 	private Logger logger;
 	
+	@Inject
+	private JsonService jsonService;
 
 	@Inject
 	private TrustedIDPService trustedIDPService;
@@ -141,10 +143,10 @@ public class TrustedIDPWebResource  extends BaseWebResource{
 		log(logger, "Add new remote idp ");
 		try {
 			Objects.requireNonNull(trustedIDPApi, "Attempt to create null TrustedIDP");
-			OxTrustedIdp existingoxTrustedIdp = trustedIDPService.getTrustedIDPByRemoteIdpHost(trustedIDPApi.getHost());
+			OxTrustedIdp existingoxTrustedIdp = trustedIDPService.getTrustedIDPByRemoteIdpHost(trustedIDPApi.getRemoteIdp().getHost());
 			if(existingoxTrustedIdp != null) {
 				return Response.status(403).entity("{\r\n" + 
-						"  \"message\": \"A Trust relation with remote idp host "+trustedIDPApi.getHost()+" already exists.\"\r\n" + 
+						"  \"message\": \"A Trust relation with remote idp host "+trustedIDPApi.getRemoteIdp().getHost()+" already exists.\"\r\n" + 
 						"}").build();			
 			}
 			
@@ -221,28 +223,31 @@ public class TrustedIDPWebResource  extends BaseWebResource{
 	}
 	
 	
-	private OxTrustedIdp copyAttributes(TrustedIDPApi trustedIDPApi) throws JsonProcessingException {
+	private OxTrustedIdp copyAttributes(TrustedIDPApi trustedIDPApi) throws IOException {
 		OxTrustedIdp oxTrustedIdp = new OxTrustedIdp();
-		oxTrustedIdp.setRemoteIdpHost(trustedIDPApi.getHost());
-		oxTrustedIdp.setRemoteIdpName(trustedIDPApi.getName());
-		oxTrustedIdp.setSigningCertificates(trustedIDPApi.getSigningCertificates());
-		oxTrustedIdp.setSelectedSingleSignOnService(new ObjectMapper().writeValueAsString(trustedIDPApi.getSelectedSingleSignOnService()));
-		oxTrustedIdp.setSupportedSingleSignOnServices(new ObjectMapper().writeValueAsString(trustedIDPApi.getSupportedSingleSignOnServices()));
+		oxTrustedIdp.setRemoteIdpHost(trustedIDPApi.getRemoteIdp().getHost());
+		oxTrustedIdp.setRemoteIdpName(trustedIDPApi.getRemoteIdp().getName());
+		oxTrustedIdp.setSigningCertificates(jsonService.objectToJson(trustedIDPApi.getRemoteIdp().getSigningCertificates()));
+		oxTrustedIdp.setSelectedSingleSignOnService(jsonService.objectToJson(trustedIDPApi.getSelectedSingleSignOnService()));
+		oxTrustedIdp.setSupportedSingleSignOnServices(jsonService.objectToJson(trustedIDPApi.getRemoteIdp().getSupportedSingleSignOnServices()));
 		//oxTrustedIdp.setInum(trustedIDPApi.getInum());
 		return oxTrustedIdp;
 	}
 	
-	private TrustedIDPApi copyParameters(OxTrustedIdp oxTrustedIdp) throws JsonProcessingException {
+	private TrustedIDPApi copyParameters(OxTrustedIdp oxTrustedIdp) throws IOException {
 		TrustedIDPApi trustedIDPApi = new TrustedIDPApi();
-		trustedIDPApi.setHost(oxTrustedIdp.getRemoteIdpHost());
-		trustedIDPApi.setName(oxTrustedIdp.getRemoteIdpName());
-		trustedIDPApi.setSigningCertificates(oxTrustedIdp.getSigningCertificates());
-		trustedIDPApi.setSelectedSingleSignOnService(new ObjectMapper().readValue(oxTrustedIdp.getSelectedSingleSignOnService(),
-				SingleSignOnServices.class));
-		ObjectMapper readMapper = new ObjectMapper();
-		trustedIDPApi.setSupportedSingleSignOnServices(readMapper.readValue(oxTrustedIdp.getSupportedSingleSignOnServices(),
-				readMapper.getTypeFactory().constructCollectionType(List.class,SingleSignOnServices.class)));
-		//trustedIDPApi.setInum(oxTrustedIdp.getInum());
+		RemoteIdp remoteIdp = new RemoteIdp();
+		remoteIdp.setHost(oxTrustedIdp.getRemoteIdpHost());
+		remoteIdp.setName(oxTrustedIdp.getRemoteIdpName());
+		remoteIdp.setSigningCertificates((List<String>)jsonService.jsonToObject(oxTrustedIdp.getSigningCertificates(),List.class));
+		trustedIDPApi.setSelectedSingleSignOnService(jsonService.jsonToObject(oxTrustedIdp.getSelectedSingleSignOnService(),
+				SingleSignOnServices.class)); 
+		
+		remoteIdp.setSupportedSingleSignOnServices((List<SingleSignOnServices>) jsonService.jsonToObject(oxTrustedIdp.getSupportedSingleSignOnServices(),
+				List.class));
+		remoteIdp.setId(oxTrustedIdp.getInum());
+		trustedIDPApi.setRemoteIdp(remoteIdp);
+		
 		return trustedIDPApi;
 	}
 
