@@ -8,9 +8,12 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "trustedIdp")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TrustedIDPApi implements Serializable {
 
 	private static final long serialVersionUID = -5914998360095334159L;
