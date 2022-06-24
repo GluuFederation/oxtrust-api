@@ -143,6 +143,11 @@ public class TrustedIDPWebResource  extends BaseWebResource{
 		log(logger, "Add new remote idp ");
 		try {
 			Objects.requireNonNull(trustedIDPApi, "Attempt to create null TrustedIDP");
+			if(trustedIDPApi.getRemoteIdp().getHost() == null || trustedIDPApi.getRemoteIdp().getHost().isEmpty()) {
+				return Response.status(400).entity("{\r\n" + 
+						"  \"message\": \"Invalid request error, please send valid remote idp host.\"\r\n" + 
+						"}").build();			
+			}
 			OxTrustedIdp existingoxTrustedIdp = trustedIDPService.getTrustedIDPByRemoteIdpHost(trustedIDPApi.getRemoteIdp().getHost());
 			if(existingoxTrustedIdp != null) {
 				return Response.status(403).entity("{\r\n" + 
