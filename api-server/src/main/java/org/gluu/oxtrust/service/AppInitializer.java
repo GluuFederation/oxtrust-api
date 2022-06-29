@@ -27,7 +27,7 @@ import org.gluu.oxauth.client.OpenIdConfigurationClient;
 import org.gluu.oxauth.client.OpenIdConfigurationResponse;
 import org.gluu.oxauth.client.OpenIdConnectDiscoveryClient;
 import org.gluu.oxauth.client.OpenIdConnectDiscoveryResponse;
-import org.gluu.oxauth.model.util.SecurityProviderUtility;
+import org.gluu.util.security.SecurityProviderUtility;
 import org.gluu.oxtrust.service.config.ConfigurationFactory;
 import org.gluu.oxtrust.service.cdi.event.CentralLdap;
 import org.gluu.oxtrust.service.logger.LoggerService;
